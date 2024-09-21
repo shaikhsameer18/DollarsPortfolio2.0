@@ -36,7 +36,7 @@ export default function Contact() {
         setToast({
           type: "success",
           message:
-            "Your message sent successfully! Thank you for your message. ",
+            "Your message sent successfully! Thank you for your message.",
         });
         setName("");
         setEmail("");
@@ -44,7 +44,7 @@ export default function Contact() {
       } else {
         throw new Error("Form submission failed");
       }
-    } catch (error) {
+    } catch {
       setToast({
         type: "error",
         message: "There was a problem sending your message. Please try again.",
