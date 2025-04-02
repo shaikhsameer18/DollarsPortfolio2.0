@@ -1,18 +1,18 @@
-import { Inter, Poppins } from 'next/font/google'
+import type { Metadata } from 'next'
+import { Poppins } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 const poppins = Poppins({ 
-  weight: ['400', '500', '600', '700'],
   subsets: ['latin'],
-  variable: '--font-poppins'
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-poppins',
 })
 
-export const metadata = {
-  title: 'Sameer Ahmed - Portfolio',
-  description: 'Full Stack Developer & AI/ML Enthusiast',
+export const metadata: Metadata = {
+  title: 'Sameer Ahmed - Full Stack Developer',
+  description: 'Portfolio of Sameer Ahmed, a Full Stack Developer specializing in modern web technologies.',
 }
 
 export default function RootLayout({
@@ -21,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${poppins.variable} font-sans bg-white text-gray-900`}>
+    <html lang="en" className={poppins.variable}>
+      <body className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 font-sans">
         <Navbar />
         <main>{children}</main>
         <Footer />

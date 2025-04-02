@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-    darkMode: ["class"],
+    darkMode: "class",
     content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -21,8 +21,16 @@ const config: Config = {
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
-  				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				50: '#f0f9ff',
+  				100: '#e0f2fe',
+  				200: '#bae6fd',
+  				300: '#7dd3fc',
+  				400: '#38bdf8',
+  				500: '#0ea5e9',
+  				600: '#0284c7',
+  				700: '#0369a1',
+  				800: '#075985',
+  				900: '#0c4a6e',
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
@@ -55,9 +63,50 @@ const config: Config = {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
+  		},
+  		fontFamily: {
+  			sans: ['var(--font-poppins)'],
+  			mono: ['var(--font-fira-code)'],
+  		},
+  		animation: {
+  			'gradient-x': 'gradient-x 15s ease infinite',
+  			'gradient-y': 'gradient-y 15s ease infinite',
+  			'gradient-xy': 'gradient-xy 15s ease infinite',
+  		},
+  		keyframes: {
+  			'gradient-y': {
+  				'0%, 100%': {
+  					'background-size': '400% 400%',
+  					'background-position': 'center top'
+  				},
+  				'50%': {
+  					'background-size': '200% 200%',
+  					'background-position': 'center center'
+  				}
+  			},
+  			'gradient-x': {
+  				'0%, 100%': {
+  					'background-size': '200% 200%',
+  					'background-position': 'left center'
+  				},
+  				'50%': {
+  					'background-size': '200% 200%',
+  					'background-position': 'right center'
+  				}
+  			},
+  			'gradient-xy': {
+  				'0%, 100%': {
+  					'background-size': '400% 400%',
+  					'background-position': 'left center'
+  				},
+  				'50%': {
+  					'background-size': '200% 200%',
+  					'background-position': 'right center'
+  				}
+  			}
   		}
   	}
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 };
 export default config;

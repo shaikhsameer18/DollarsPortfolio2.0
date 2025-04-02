@@ -3,7 +3,8 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink, Code2, ArrowRight, Clock, CheckCircle2 } from "lucide-react";
+import { sharedStyles } from "@/app/styles/shared";
 import geeky from "@/public/assets/project/geeky2.png";
 import alvira from "@/public/assets/project/alvira.png";
 import ddosshield from "@/public/assets/project/ddosshield.png";
@@ -20,6 +21,7 @@ const projects = [
     demo: "https://www.geekytechh.in/",
     tags: ["Next", "Tailwind CSS", "Framer-Motion", "FormSpree"],
     status: "Completed",
+    featured: true,
   },
   {
     title: "Alvira Bags",
@@ -30,6 +32,7 @@ const projects = [
     demo: "https://alvirabag.vercel.app/",
     tags: ["Next", "Tailwind CSS", "Sanity.io"],
     status: "Completed",
+    featured: true,
   },
   {
     title: "Science AI",
@@ -39,6 +42,7 @@ const projects = [
     demo: "https://science-ai.vercel.app/",
     tags: ["Next", "Tailwind CSS", "Framer-Motion", "Shadcn"],
     status: "In Progress",
+    featured: true,
   },
   {
     title: "DDoS Shield",
@@ -48,6 +52,7 @@ const projects = [
     demo: "https://ddos-shield.vercel.app/",
     tags: ["Next", "Tailwind CSS", "Framer-Motion", "Shadcn"],
     status: "In Progress",
+    featured: true,
   },
   {
     title: "Tribute Page",
@@ -57,6 +62,7 @@ const projects = [
     demo: "https://shaikhsameer18.github.io/Web/tribute.html",
     tags: ["HTML", "CSS"],
     status: "Completed",
+    featured: false,
   },
   {
     title: "Technical Documentation",
@@ -67,89 +73,200 @@ const projects = [
     demo: "https://shaikhsameer18.github.io/Web/technical.html",
     tags: ["HTML", "CSS"],
     status: "Completed",
+    featured: false,
   },
 ];
 
 export default function Projects() {
   return (
-    <div className="min-h-screen py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-blue-50 to-white">
-      <div className="max-w-7xl mx-auto">
+    <div className={sharedStyles.pageContainer}>
+      <div className={sharedStyles.backgroundEffects.pattern} />
+      <div className={sharedStyles.maxWidthContainer}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center"
+          transition={{ duration: 0.5 }}
+          className="text-center space-y-6"
         >
-          <h2 className="text-3xl mt-6 font-bold text-blue-600 mb-2 font-space-grotesk">
-            Projects
-          </h2>
-          <p className="text-xl text-gray-600 mb-8 font-inter">
-            My Recent Work
+          <div className={sharedStyles.iconContainer}>
+            <Code2 className="w-6 h-6" />
+          </div>
+          <h1 className={sharedStyles.sectionTitle}>Featured Projects</h1>
+          <p className={sharedStyles.sectionSubtitle}>
+            A showcase of my recent work and technical expertise
           </p>
         </motion.div>
 
-        <div className="mt-16">
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {projects.map((project, index) => (
+        <div className="mt-16 space-y-20">
+          {/* Featured Projects */}
+          <div className="space-y-8">
+            <div className={sharedStyles.grid.twoCol}>
+              {projects
+                .filter((project) => project.featured)
+                .map((project, index) => (
               <motion.div
                 key={project.title}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                className="bg-white overflow-hidden shadow-lg rounded-lg hover:shadow-xl transition-shadow duration-300"
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="group"
               >
-                <div className="relative w-full h-56 overflow-hidden">
+                    <div className={`${sharedStyles.card} p-0 overflow-hidden`}>
+                      <div className="relative h-64 overflow-hidden">
                   <Image
-                    className="w-full h-full object-contain"
+                          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
                     src={project.image}
                     alt={project.title}
-                    width={400}
-                    height={300}
+                          fill
+                          priority
                   />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-500" />
+                        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+                          <h3 className="text-2xl font-bold text-white font-space-grotesk">
+                            {project.title}
+                          </h3>
                   <div
-                    className={`absolute top-0 right-0 m-2 px-2 py-1 rounded-full text-xs font-semibold ${
+                            className={`flex items-center space-x-1.5 px-3 py-1 rounded-full text-sm font-medium backdrop-blur-md ${
                       project.status === "In Progress"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : "bg-green-100 text-green-800"
-                    }`}
-                  >
-                    {project.status}
+                                ? "bg-yellow-100/90 text-yellow-800 dark:bg-yellow-900/50 dark:text-yellow-300"
+                                : "bg-green-100/90 text-green-800 dark:bg-green-900/50 dark:text-green-300"
+                            }`}
+                          >
+                            {project.status === "In Progress" ? (
+                              <Clock className="w-4 h-4" />
+                            ) : (
+                              <CheckCircle2 className="w-4 h-4" />
+                            )}
+                            <span>{project.status}</span>
+                          </div>
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-blue-600 mb-2 font-space-grotesk">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 font-inter">
+                      <div className="p-6 space-y-4">
+                        <p className={sharedStyles.text}>
                     {project.description}
                   </p>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                        <div className="flex flex-wrap gap-2">
                     {project.tags.map((tag) => (
                       <span
                         key={tag}
-                        className="px-2 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full"
+                              className={sharedStyles.tag}
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
+                        <div className="flex items-center justify-between pt-4 border-t border-gray-200 dark:border-gray-700/50">
                   <div className="flex space-x-4">
                     <Link
                       href={project.github}
-                      className="text-gray-600 hover:text-blue-600 transition-colors duration-300"
-                    >
-                      <Github className="h-6 w-6" />
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 hover:text-indigo-500 dark:text-gray-400 dark:hover:text-indigo-400 transition-all duration-300"
+                            >
+                              <Github className="h-5 w-5" />
+                            </Link>
+                            <Link
+                              href={project.demo}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-600 hover:text-indigo-500 dark:text-gray-400 dark:hover:text-indigo-400 transition-all duration-300"
+                            >
+                              <ExternalLink className="h-5 w-5" />
+                            </Link>
+                          </div>
+                          <Link
+                            href={project.demo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={sharedStyles.button}
+                          >
+                            View Project
+                            <ArrowRight className="w-4 h-4 ml-2" />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+            </div>
+          </div>
+
+          {/* Other Projects */}
+          <div className="space-y-8">
+            <h2 className={sharedStyles.heading}>Other Projects</h2>
+            <div className={sharedStyles.grid.threeCol}>
+              {projects
+                .filter((project) => !project.featured)
+                .map((project, index) => (
+                  <motion.div
+                    key={project.title}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className="group"
+                  >
+                    <div className={`${sharedStyles.card} p-0 overflow-hidden`}>
+                      <div className="relative h-48 overflow-hidden">
+                        <Image
+                          className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                          src={project.image}
+                          alt={project.title}
+                          fill
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <h3 className="text-xl font-bold text-white">
+                            {project.title}
+                          </h3>
+                        </div>
+                      </div>
+                      <div className="p-4 space-y-3">
+                        <p className={sharedStyles.text}>
+                          {project.description}
+                        </p>
+                        <div className="flex flex-wrap gap-2">
+                          {project.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className={sharedStyles.tag}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex items-center justify-between pt-3 border-t border-gray-200 dark:border-gray-700/50">
+                          <div className="flex space-x-3">
+                            <Link
+                              href={project.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-gray-600 hover:text-indigo-500 dark:text-gray-400 dark:hover:text-indigo-400 transition-colors"
+                            >
+                              <Github className="h-5 w-5" />
                     </Link>
                     <Link
                       href={project.demo}
-                      className="text-gray-600 hover:text-blue-600 transition-colors duration-300"
-                    >
-                      <ExternalLink className="h-6 w-6" />
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-gray-600 hover:text-indigo-500 dark:text-gray-400 dark:hover:text-indigo-400 transition-colors"
+                            >
+                              <ExternalLink className="h-5 w-5" />
+                            </Link>
+                          </div>
+                          <Link
+                            href={project.demo}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm font-medium text-indigo-500 hover:text-indigo-600 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors"
+                          >
+                            View Project
                     </Link>
+                        </div>
                   </div>
                 </div>
               </motion.div>
             ))}
+            </div>
           </div>
         </div>
       </div>

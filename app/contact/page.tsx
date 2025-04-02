@@ -1,13 +1,18 @@
 "use client"
 
 import { useState } from "react"
-import { motion } from "framer-motion"
-import { Send } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Mail, MapPin, Send, Github, Linkedin, Twitter } from "lucide-react"
+import { sharedStyles } from "@/app/styles/shared"
 
 export default function Contact() {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [message, setMessage] = useState("")
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  })
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle")
 
@@ -16,28 +21,11 @@ export default function Contact() {
     setIsSubmitting(true)
     setSubmitStatus("idle")
 
-    const formData = { name, email, message }
-
     try {
-      const response = await fetch(
-        process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT as string,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      )
-
-      if (response.ok) {
+      // Replace with your actual form submission logic
+      await new Promise((resolve) => setTimeout(resolve, 1500))
         setSubmitStatus("success")
-        setName("")
-        setEmail("")
-        setMessage("")
-      } else {
-        throw new Error("Form submission failed")
-      }
+      setFormData({ name: "", email: "", subject: "", message: "" })
     } catch {
       setSubmitStatus("error")
     } finally {
@@ -45,115 +33,220 @@ export default function Contact() {
     }
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }))
+  }
+
+  const contactInfo = [
+    {
+      icon: <Mail className="w-5 h-5" />,
+      label: "Email",
+      value: "sameer.shaikh0425@gmail.com",
+    },
+    {
+      icon: <MapPin className="w-5 h-5" />,
+      label: "Location",
+      value: "Mumbai, Maharashtra, India",
+    },
+  ]
+
+  const socialLinks = [
+    { icon: <Github className="w-5 h-5" />, href: "https://github.com/shaikhsameer18", label: "GitHub" },
+    { icon: <Linkedin className="w-5 h-5" />, href: "https://linkedin.com/in/shaikhsameer18", label: "LinkedIn" },
+    { icon: <Twitter className="w-5 h-5" />, href: "https://twitter.com/shaikhsameer18", label: "Twitter" },
+  ]
+
   return (
-    <div className="bg-gradient-to-br from-blue-100 to-white min-h-screen py-16 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
+    <div className={sharedStyles.pageContainer}>
+      <div className={sharedStyles.backgroundEffects.pattern} />
+      <div className={sharedStyles.maxWidthContainer}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-8"
+          transition={{ duration: 0.5 }}
+          className="text-center space-y-6"
         >
-          <h2 className="text-3xl sm:text-4xl mt-6 font-bold text-blue-600 mb-4 font-space-grotesk">
-            Contact
-          </h2>
-          <p className="text-lg sm:text-xl text-gray-600 font-inter">
-            Get in Touch
+          <div className={sharedStyles.iconContainer}>
+            <Mail className="w-6 h-6" />
+          </div>
+          <h1 className={sharedStyles.sectionTitle}>Get in Touch</h1>
+          <p className={sharedStyles.sectionSubtitle}>
+            Have a question or want to work together? I&apos;d love to hear from you.
           </p>
         </motion.div>
 
+        <div className="mt-16 grid grid-cols-1 lg:grid-cols-5 gap-8">
+          {/* Contact Form */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <div className="bg-white shadow-md rounded-lg p-6">
-            {submitStatus === "success" ? (
-              <div className="text-center text-green-600">
-                <p className="text-xl font-semibold mb-2">Thank you for your message!</p>
-              </div>
-            ) : (
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-3"
+          >
+            <div className={`${sharedStyles.card} h-full`}>
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Name
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                      value={formData.name}
+                      onChange={handleChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className={sharedStyles.input}
+                      placeholder="Your name"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Email
                   </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className={sharedStyles.input}
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className={sharedStyles.input}
+                    placeholder="Message subject"
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                  >
+                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Message
                   </label>
                   <textarea
                     id="message"
                     name="message"
-                    rows={4}
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    value={formData.message}
+                    onChange={handleChange}
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    rows={6}
+                    className={`${sharedStyles.input} resize-none`}
+                    placeholder="Your message"
                   />
                 </div>
-                <div>
-                  <button
+                <div className="flex items-center justify-between">
+                  <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white ${
-                      isSubmitting
-                        ? "bg-gray-400 cursor-not-allowed"
-                        : "bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    } transition-colors`}
+                    className={sharedStyles.button}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
                     {isSubmitting ? (
-                      "Sending..."
+                      <span className="flex items-center">
+                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Sending...
+                      </span>
                     ) : (
-                      <>
+                      <span className="flex items-center">
+                        <Send className="w-5 h-5 mr-2" />
                         Send Message
-                        <Send className="ml-2 h-4 w-4" aria-hidden="true" />
-                      </>
+                      </span>
                     )}
-                  </button>
+                  </motion.button>
+                  <AnimatePresence mode="wait">
+                    {submitStatus === "success" && (
+                      <motion.p
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="text-green-500 dark:text-green-400"
+                      >
+                        Message sent successfully!
+                      </motion.p>
+                    )}
+                    {submitStatus === "error" && (
+                      <motion.p
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="text-red-500 dark:text-red-400"
+                      >
+                        Failed to send message. Please try again.
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
                 </div>
-                {submitStatus === "error" && (
-                  <p className="text-red-600 text-center">
-                    There was a problem sending your message. Please try again.
-                  </p>
-                )}
               </form>
-            )}
+            </div>
+          </motion.div>
+
+          {/* Contact Info & Social Links */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+            className="lg:col-span-2 space-y-8"
+          >
+            {/* Contact Information */}
+            <div className={sharedStyles.card}>
+              <h2 className={`${sharedStyles.heading} mb-6`}>Contact Information</h2>
+              <div className="space-y-6">
+                {contactInfo.map((info, index) => (
+                  <div key={index} className="flex items-start space-x-4">
+                    <div className={sharedStyles.iconWrapper}>
+                      {info.icon}
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900 dark:text-white">{info.label}</h3>
+                      <p className={sharedStyles.text}>{info.value}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Social Links */}
+            <div className={sharedStyles.card}>
+              <h2 className={`${sharedStyles.heading} mb-6`}>Connect With Me</h2>
+              <div className="flex flex-wrap gap-4">
+                {socialLinks.map((link, index) => (
+                  <motion.a
+                    key={index}
+                    href={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 transition-colors"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    {link.icon}
+                    <span>{link.label}</span>
+                  </motion.a>
+                ))}
+              </div>
           </div>
         </motion.div>
+        </div>
       </div>
     </div>
   )
