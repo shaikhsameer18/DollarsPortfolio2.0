@@ -15,128 +15,101 @@ const navItems = [
 ]
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
-    // Check initial theme
     if (typeof window !== 'undefined') {
       setIsDark(document.documentElement.classList.contains('dark'))
     }
-    
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20)
+      setScrolled(window.scrollY > 10)
     }
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark')
-    } else {
-      document.documentElement.classList.remove('dark')
-    }
-    // Remove transition during theme change
-    document.documentElement.style.setProperty('--tw-bg-opacity', '1')
-    document.documentElement.classList.add('disable-transitions')
-    setTimeout(() => {
-      document.documentElement.classList.remove('disable-transitions')
-    }, 100)
+    document.documentElement.classList.toggle('dark', isDark)
   }, [isDark])
 
   return (
-    <nav className={`fixed w-full z-50 ${
-      scrolled 
-        ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-lg shadow-lg border-b border-gray-200/20 dark:border-gray-800/20' 
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled
+        ? 'bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md shadow-md border-b border-zinc-200/30 dark:border-zinc-800/30'
         : 'bg-transparent'
-    }`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <Code2 className="h-8 w-8 text-indigo-500 group-hover:scale-110 transition-transform duration-200" />
-              <span className="font-bold text-2xl bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
-                SAMMY
-              </span>
-            </Link>
-          </div>
-          
-          <div className="hidden sm:ml-6 sm:flex sm:items-center sm:space-x-4">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.path}
-                className={`inline-flex items-center px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  pathname === item.path
-                    ? 'text-indigo-500 dark:text-indigo-400 bg-indigo-50/50 dark:bg-indigo-900/30 shadow-sm'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400 hover:bg-indigo-50/50 dark:hover:bg-indigo-900/30'
-                }`}
-              >
-                {item.name}
-              </Link>
-            ))}
-            <button
-              onClick={() => setIsDark(!isDark)}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-all duration-200 hover:scale-110"
-              aria-label="Toggle dark mode"
-            >
-              {isDark ? (
-                <Sun className="h-5 w-5 text-gray-300" />
-              ) : (
-                <Moon className="h-5 w-5 text-gray-700" />
-              )}
-            </button>
-          </div>
+      }`}>
+      <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 group">
+          <Code2 className="h-7 w-7 text-violet-500 group-hover:scale-105 transition-transform" />
+          <span className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-violet-500 via-pink-500 to-rose-500 text-transparent bg-clip-text">
+            SAMMY
+          </span>
+        </Link>
 
-          <div className="flex items-center sm:hidden">
-            <button
-              onClick={() => setIsDark(!isDark)}
-              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors mr-2"
-              aria-label="Toggle dark mode"
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-4">
+          {navItems.map((item) => (
+            <Link
+              key={item.name}
+              href={item.path}
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${pathname === item.path
+                  ? 'bg-violet-100 dark:bg-violet-800/40 text-violet-600 dark:text-violet-300 shadow-sm'
+                  : 'text-zinc-700 dark:text-zinc-300 hover:text-violet-500 dark:hover:text-violet-400 hover:bg-violet-100/40 dark:hover:bg-violet-800/30'
+                }`}
             >
-              {isDark ? (
-                <Sun className="h-5 w-5 text-gray-300" />
-              ) : (
-                <Moon className="h-5 w-5 text-gray-700" />
-              )}
-            </button>
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? (
-                <X className="block h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Menu className="block h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
-          </div>
+              {item.name}
+            </Link>
+          ))}
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className="ml-2 p-2 rounded-full bg-zinc-100 dark:bg-zinc-800 hover:scale-110 transition-all duration-200"
+            aria-label="Toggle dark mode"
+          >
+            {isDark ? <Sun className="h-5 w-5 text-zinc-300" /> : <Moon className="h-5 w-5 text-zinc-600" />}
+          </button>
+        </div>
+
+        {/* Mobile Toggle */}
+        <div className="md:hidden flex items-center gap-2">
+          <button
+            onClick={() => setIsDark(!isDark)}
+            className="p-2 rounded-full bg-zinc-100 dark:bg-zinc-800"
+            aria-label="Toggle dark mode"
+          >
+            {isDark ? <Sun className="h-5 w-5 text-zinc-300" /> : <Moon className="h-5 w-5 text-zinc-600" />}
+          </button>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 rounded-md text-zinc-600 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
         </div>
       </div>
 
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="sm:hidden"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-white dark:bg-zinc-900 border-t border-zinc-200/30 dark:border-zinc-800/30 shadow-md"
           >
-            <div className="pt-2 pb-3 space-y-1 bg-white dark:bg-gray-900 shadow-lg">
+            <div className="flex flex-col px-6 py-4 gap-3">
               {navItems.map((item) => (
                 <Link
                   key={item.name}
                   href={item.path}
-                  className={`block px-4 py-3 text-base font-medium transition-colors duration-200 ${
-                    pathname === item.path
-                      ? 'text-indigo-500 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-900/30'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-indigo-500 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/30'
-                  }`}
+                  className={`text-base font-medium py-2 rounded-md transition-all ${pathname === item.path
+                      ? 'text-violet-600 dark:text-violet-300 bg-violet-100 dark:bg-violet-800/30'
+                      : 'text-zinc-700 dark:text-zinc-300 hover:bg-violet-100/40 dark:hover:bg-violet-800/30 hover:text-violet-500 dark:hover:text-violet-400'
+                    }`}
                   onClick={() => setIsOpen(false)}
                 >
                   {item.name}

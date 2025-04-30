@@ -29,7 +29,31 @@ import {
   SiDjango,
   SiJest,
   SiJira,
-  SiFigma
+  SiFigma,
+  SiBootstrap,
+  SiGreensock,
+  SiAxios,
+  SiFastapi,
+  SiFlask,
+  SiApollographql,
+  SiFirebase,
+  SiMongoose,
+  SiPrisma,
+  SiRedis,
+  SiSocketdotio,
+  SiSupabase,
+  SiPostman,
+  SiGooglecolab,
+  SiHuggingface,
+  SiJupyter,
+  SiKeras,
+  SiLangchain,
+  SiNumpy,
+  SiOpencv,
+  SiPandas,
+  SiPytorch,
+  SiScikitlearn,
+  SiTensorflow
 } from "react-icons/si";
 import { sharedStyles } from "@/app/styles/shared";
 
@@ -62,6 +86,9 @@ const skills: SkillCategory[] = [
       { name: "Material UI", icon: <SiMui className="w-6 h-6" />, proficiency: 85 },
       { name: "Redux", icon: <SiRedux className="w-6 h-6" />, proficiency: 80 },
       { name: "Framer Motion", icon: <SiFramer className="w-6 h-6" />, proficiency: 75 },
+      { name: "Bootstrap", icon: <SiBootstrap className="w-6 h-6" />, proficiency: 71 },
+      { name: "GSAP", icon: <SiGreensock className="w-6 h-6" />, proficiency: 70 },
+      { name: "Axios", icon: <SiAxios className="w-6 h-6" />, proficiency: 85 },
     ],
   },
   {
@@ -76,6 +103,15 @@ const skills: SkillCategory[] = [
       { name: "GraphQL", icon: <SiGraphql className="w-6 h-6" />, proficiency: 75 },
       { name: "Python", icon: <FaPython className="w-6 h-6" />, proficiency: 70 },
       { name: "Django", icon: <SiDjango className="w-6 h-6" />, proficiency: 65 },
+      { name: "Flask", icon: <SiFlask className="w-6 h-6" />, proficiency: 70 },
+      { name: "FastAPI", icon: <SiFastapi className="w-6 h-6" />, proficiency: 70 },
+      { name: "REST API", icon: <SiApollographql className="w-6 h-6" />, proficiency: 85 },
+      { name: "Redis", icon: <SiRedis className="w-6 h-6" />, proficiency: 70 },
+      { name: "Firebase", icon: <SiFirebase className="w-6 h-6" />, proficiency: 75 },
+      { name: "Supabase", icon: <SiSupabase className="w-6 h-6" />, proficiency: 70 },
+      { name: "Prisma ORM", icon: <SiPrisma className="w-6 h-6" />, proficiency: 80 },
+      { name: "Mongoose", icon: <SiMongoose className="w-6 h-6" />, proficiency: 85 },
+      { name: "Socket.IO", icon: <SiSocketdotio className="w-6 h-6" />, proficiency: 75 },
     ],
   },
   {
@@ -91,8 +127,29 @@ const skills: SkillCategory[] = [
       { name: "Jira", icon: <SiJira className="w-6 h-6" />, proficiency: 80 },
       { name: "Figma", icon: <SiFigma className="w-6 h-6" />, proficiency: 75 },
       { name: "VS Code", icon: <FaCode className="w-6 h-6" />, proficiency: 95 },
+      { name: "Postman", icon: <SiPostman className="w-6 h-6" />, proficiency: 90 },
     ],
   },
+  {
+    category: "AI / ML / Data Science",
+    icon: <Code2 className="w-6 h-6" />,
+    description: "Working with models, data pipelines, and AI frameworks",
+    technologies: [
+      { name: "Python", icon: <FaPython className="w-6 h-6" />, proficiency: 85 },
+      { name: "NumPy", icon: <SiNumpy className="w-6 h-6" />, proficiency: 80 },
+      { name: "Pandas", icon: <SiPandas className="w-6 h-6" />, proficiency: 80 },
+      { name: "Scikit-learn", icon: <SiScikitlearn className="w-6 h-6" />, proficiency: 80 },
+      { name: "TensorFlow", icon: <SiTensorflow className="w-6 h-6" />, proficiency: 75 },
+      { name: "Keras", icon: <SiKeras className="w-6 h-6" />, proficiency: 75 },
+      { name: "PyTorch", icon: <SiPytorch className="w-6 h-6" />, proficiency: 75 },
+      { name: "OpenCV", icon: <SiOpencv className="w-6 h-6" />, proficiency: 70 },
+      { name: "Jupyter Notebook", icon: <SiJupyter className="w-6 h-6" />, proficiency: 90 },
+      { name: "Google Colab", icon: <SiGooglecolab className="w-6 h-6" />, proficiency: 90 },
+      { name: "Hugging Face", icon: <SiHuggingface className="w-6 h-6" />, proficiency: 70 },
+      { name: "LangChain", icon: <SiLangchain className="w-6 h-6" />, proficiency: 70 },
+    ],
+  },
+
 ];
 
 export default function Skills() {

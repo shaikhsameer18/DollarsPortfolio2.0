@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { Mail, MapPin, Send, Github, Linkedin, Twitter } from "lucide-react"
+import { Mail, MapPin, Send, Github, Linkedin } from "lucide-react"
 import { sharedStyles } from "@/app/styles/shared"
 
 export default function Contact() {
@@ -24,7 +24,7 @@ export default function Contact() {
     try {
       // Replace with your actual form submission logic
       await new Promise((resolve) => setTimeout(resolve, 1500))
-        setSubmitStatus("success")
+      setSubmitStatus("success")
       setFormData({ name: "", email: "", subject: "", message: "" })
     } catch {
       setSubmitStatus("error")
@@ -56,7 +56,7 @@ export default function Contact() {
   const socialLinks = [
     { icon: <Github className="w-5 h-5" />, href: "https://github.com/shaikhsameer18", label: "GitHub" },
     { icon: <Linkedin className="w-5 h-5" />, href: "https://linkedin.com/in/shaikhsameer18", label: "LinkedIn" },
-    { icon: <Twitter className="w-5 h-5" />, href: "https://twitter.com/shaikhsameer18", label: "Twitter" },
+    // { icon: <Twitter className="w-5 h-5" />, href: "https://twitter.com/shaikhsameer18", label: "Twitter" },
   ]
 
   return (
@@ -80,7 +80,7 @@ export default function Contact() {
 
         <div className="mt-16 grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Contact Form */}
-        <motion.div
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
@@ -89,29 +89,29 @@ export default function Contact() {
             <div className={`${sharedStyles.card} h-full`}>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
+                  <div>
                     <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
                       value={formData.name}
                       onChange={handleChange}
-                    required
+                      required
                       className={sharedStyles.input}
                       placeholder="Your name"
-                  />
-                </div>
-                <div>
+                    />
+                  </div>
+                  <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
                       value={formData.email}
                       onChange={handleChange}
                       required
@@ -244,8 +244,8 @@ export default function Contact() {
                   </motion.a>
                 ))}
               </div>
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </div>

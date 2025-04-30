@@ -4,7 +4,7 @@ import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-const poppins = Poppins({ 
+const poppins = Poppins({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
   variable: '--font-poppins',
@@ -13,6 +13,12 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   title: 'Sameer Ahmed - Full Stack Developer',
   description: 'Portfolio of Sameer Ahmed, a Full Stack Developer specializing in modern web technologies.',
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+    ],
+
+  },
 }
 
 export default function RootLayout({
