@@ -22,10 +22,21 @@ export default function Contact() {
     setSubmitStatus("idle")
 
     try {
-      // Replace with your actual form submission logic
-      await new Promise((resolve) => setTimeout(resolve, 1500))
-      setSubmitStatus("success")
-      setFormData({ name: "", email: "", subject: "", message: "" })
+      const response = await fetch("https://formspree.io/f/mrbqerrj", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        setSubmitStatus("success")
+        setFormData({ name: "", email: "", subject: "", message: "" })
+      } else {
+        setSubmitStatus("error")
+      }
     } catch {
       setSubmitStatus("error")
     } finally {
@@ -56,7 +67,6 @@ export default function Contact() {
   const socialLinks = [
     { icon: <Github className="w-5 h-5" />, href: "https://github.com/shaikhsameer18", label: "GitHub" },
     { icon: <Linkedin className="w-5 h-5" />, href: "https://linkedin.com/in/shaikhsameer18", label: "LinkedIn" },
-    // { icon: <Twitter className="w-5 h-5" />, href: "https://twitter.com/shaikhsameer18", label: "Twitter" },
   ]
 
   return (
