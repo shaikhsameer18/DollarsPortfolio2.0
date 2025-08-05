@@ -1,46 +1,48 @@
 import Link from "next/link";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Code2, Github, Linkedin, Mail } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-zinc-900 border-t border-zinc-200/30 dark:border-zinc-800/30">
-      <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <footer className="bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 py-6 px-4">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-zinc-600 dark:text-zinc-300 gap-4">
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2">
+          <Code2 className="h-5 w-5 text-violet-600" />
+          <span className="text-lg font-bold bg-gradient-to-r from-violet-500 via-pink-500 to-rose-500 text-transparent bg-clip-text">
+            SAMMY
+          </span>
+        </Link>
 
-        {/* Left: Logo */}
-        <div className="text-2xl font-extrabold bg-gradient-to-r from-violet-500 via-pink-500 to-rose-500 text-transparent bg-clip-text">
-          SAMMY
-        </div>
+        <span>
+          {" "}
+          &copy; {new Date().getFullYear()}{" "}
+          <span className="font-medium">Sameer Ahmed</span>. All rights
+          reserved.
+        </span>
 
-        {/* Center: Copyright */}
-        <div className="text-sm text-zinc-500 dark:text-zinc-400 text-center">
-          &copy; {new Date().getFullYear()} Sameer Ahmed. All rights reserved.
-        </div>
-
-        {/* Right: Socials */}
-        <div className="flex items-center space-x-4">
-          <Link
-            href="https://github.com/shaikhsameer18"
-            className="text-zinc-400 hover:text-violet-500 dark:hover:text-violet-400 transition-transform hover:scale-110"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-          >
-            <Github className="h-5 w-5" />
-          </Link>
+        {/* Social Icons */}
+        <div className="flex gap-6">
           <Link
             href="https://linkedin.com/in/sameerahmed08"
-            className="text-zinc-400 hover:text-violet-500 dark:hover:text-violet-400 transition-transform hover:scale-110"
             target="_blank"
             rel="noopener noreferrer"
+            className="hover:text-violet-500 transition"
             aria-label="LinkedIn"
           >
             <Linkedin className="h-5 w-5" />
           </Link>
           <Link
-            href="mailto:sameer.shaikh0425@gmail.com"
-            className="text-zinc-400 hover:text-violet-500 dark:hover:text-violet-400 transition-transform hover:scale-110"
+            href="https://github.com/shaikhsameer18"
             target="_blank"
             rel="noopener noreferrer"
+            className="hover:text-violet-500 transition"
+            aria-label="GitHub"
+          >
+            <Github className="h-5 w-5" />
+          </Link>
+          <Link
+            href="mailto:sameer.shaikh0425@gmail.com"
+            className="hover:text-violet-500 transition"
             aria-label="Email"
           >
             <Mail className="h-5 w-5" />
