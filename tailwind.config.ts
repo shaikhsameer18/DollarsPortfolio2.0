@@ -1,112 +1,84 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-	darkMode: "class",
-	content: [
-		"./pages/**/*.{js,ts,jsx,tsx,mdx}",
-		"./components/**/*.{js,ts,jsx,tsx,mdx}",
-		"./app/**/*.{js,ts,jsx,tsx,mdx}",
-	],
-	theme: {
-		extend: {
-			colors: {
-				background: 'hsl(var(--background))',
-				foreground: 'hsl(var(--foreground))',
-				card: {
-					DEFAULT: 'hsl(var(--card))',
-					foreground: 'hsl(var(--card-foreground))'
-				},
-				popover: {
-					DEFAULT: 'hsl(var(--popover))',
-					foreground: 'hsl(var(--popover-foreground))'
-				},
-				primary: {
-					50: '#f0f9ff',
-					100: '#e0f2fe',
-					200: '#bae6fd',
-					300: '#7dd3fc',
-					400: '#38bdf8',
-					500: '#0ea5e9',
-					600: '#0284c7',
-					700: '#0369a1',
-					800: '#075985',
-					900: '#0c4a6e',
-				},
-				secondary: {
-					DEFAULT: 'hsl(var(--secondary))',
-					foreground: 'hsl(var(--secondary-foreground))'
-				},
-				muted: {
-					DEFAULT: 'hsl(var(--muted))',
-					foreground: 'hsl(var(--muted-foreground))'
-				},
-				accent: {
-					DEFAULT: 'hsl(var(--accent))',
-					foreground: 'hsl(var(--accent-foreground))'
-				},
-				destructive: {
-					DEFAULT: 'hsl(var(--destructive))',
-					foreground: 'hsl(var(--destructive-foreground))'
-				},
-				border: 'hsl(var(--border))',
-				input: 'hsl(var(--input))',
-				ring: 'hsl(var(--ring))',
-				chart: {
-					'1': 'hsl(var(--chart-1))',
-					'2': 'hsl(var(--chart-2))',
-					'3': 'hsl(var(--chart-3))',
-					'4': 'hsl(var(--chart-4))',
-					'5': 'hsl(var(--chart-5))'
-				}
-			},
-			borderRadius: {
-				lg: 'var(--radius)',
-				md: 'calc(var(--radius) - 2px)',
-				sm: 'calc(var(--radius) - 4px)'
-			},
-			fontFamily: {
-				sans: ['var(--font-poppins)'],
-				mono: ['var(--font-fira-code)'],
-			},
-			animation: {
-				'gradient-x': 'gradient-x 15s ease infinite',
-				'gradient-y': 'gradient-y 15s ease infinite',
-				'gradient-xy': 'gradient-xy 15s ease infinite',
-			},
-			keyframes: {
-				'gradient-y': {
-					'0%, 100%': {
-						'background-size': '400% 400%',
-						'background-position': 'center top'
-					},
-					'50%': {
-						'background-size': '200% 200%',
-						'background-position': 'center center'
-					}
-				},
-				'gradient-x': {
-					'0%, 100%': {
-						'background-size': '200% 200%',
-						'background-position': 'left center'
-					},
-					'50%': {
-						'background-size': '200% 200%',
-						'background-position': 'right center'
-					}
-				},
-				'gradient-xy': {
-					'0%, 100%': {
-						'background-size': '400% 400%',
-						'background-position': 'left center'
-					},
-					'50%': {
-						'background-size': '200% 200%',
-						'background-position': 'right center'
-					}
-				}
-			}
-		}
-	},
-	plugins: [],
+  darkMode: "class",
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      // ── Earthy Forest Hues ──────────────────────────────────────────────────
+      colors: {
+        // Cream / warm backgrounds
+        cream: {
+          50:  "#fdf9f4",
+          100: "#f8f5f0",
+          200: "#f0ede6",
+          300: "#e8e4da",
+          400: "#ddd9ce",
+          500: "#dad7cd", // Dust Grey — key border/bg token
+        },
+        // Forest palette — Earthy Forest Hues
+        forest: {
+          sage:     "#a3b18a", // Dry Sage
+          sage50:   "#f2f5ee", // very light sage background
+          sage100:  "#dde6d0", // light sage border
+          fern:     "#588157", // Fern — mid accent
+          fern50:   "#eef3e8", // very light fern background
+          fern100:  "#c5d9b5", // light fern border
+          hunter:   "#3a5a40", // Hunter Green — primary actions
+          hunter50: "#e8efe9", // very light hunter background
+          pine:     "#344e41", // Pine Teal — deepest, hover states
+        },
+        // Stone neutrals for text
+        stone: {
+          50:  "#faf9f7",
+          100: "#f5f3ef",
+          200: "#e8e5de",
+          300: "#d6d2c8",
+          400: "#b0ab9e",
+          500: "#8a8478",
+          600: "#6b6558",
+          700: "#514c40",
+          800: "#3a352b",
+          900: "#1a1f1b", // near-black with forest tint
+        },
+      },
+      fontFamily: {
+        playfair: ["var(--font-playfair)", "Georgia", "serif"],
+        space:    ["var(--font-space)", "system-ui", "sans-serif"],
+        inter:    ["var(--font-inter)", "system-ui", "sans-serif"],
+      },
+      animation: {
+        "fade-up":  "fade-up 0.55s ease-out forwards",
+        "fade-in":  "fade-in 0.4s ease-out forwards",
+        "slide-in": "slide-in 0.5s ease-out forwards",
+      },
+      keyframes: {
+        "fade-up": {
+          "0%":   { opacity: "0", transform: "translateY(20px)" },
+          "100%": { opacity: "1", transform: "translateY(0)"    },
+        },
+        "fade-in": {
+          "0%":   { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        "slide-in": {
+          "0%":   { opacity: "0", transform: "translateX(-16px)" },
+          "100%": { opacity: "1", transform: "translateX(0)"     },
+        },
+      },
+      boxShadow: {
+        card:         "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
+        "card-hover": "0 4px 16px rgba(0,0,0,0.10), 0 2px 4px rgba(0,0,0,0.06)",
+        "forest":     "0 4px 14px rgba(58,90,64,0.20)",
+        "forest-sm":  "0 2px 8px rgba(58,90,64,0.14)",
+      },
+    },
+  },
+  plugins: [],
 };
+
 export default config;

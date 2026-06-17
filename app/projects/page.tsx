@@ -221,12 +221,15 @@ export default function Projects() {
           transition={{ duration: 0.5 }}
           className="text-center space-y-6"
         >
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-indigo-500 text-white shadow-lg">
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25">
             <Code2 className="w-6 h-6" />
           </div>
-          <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent drop-shadow-sm bg-gradient-to-r from-indigo-700 via-purple-700 to-pink-700 dark:from-indigo-400 dark:via-purple-400 dark:to-pink-400">
-            Featured Projects
+          <h1 className="text-4xl sm:text-5xl font-bold bg-clip-text text-transparent drop-shadow-sm bg-gradient-to-r from-cyan-600 via-teal-500 to-blue-600 dark:from-cyan-400 dark:via-teal-300 dark:to-blue-400">
+            Technical Projects
           </h1>
+          <p className="text-slate-500 dark:text-slate-400 max-w-xl mx-auto text-sm">
+            Personal and academic projects demonstrating a strong technical development foundation that supports my cybersecurity engineering work.
+          </p>
         </motion.div>
 
         {/* Search Bar */}
@@ -238,7 +241,7 @@ export default function Projects() {
               placeholder="Search projects..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-purple-500 dark:focus:ring-purple-400 transition-all"
+              className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:focus:ring-cyan-400 transition-all"
             />
             {searchTerm && (
               <button
@@ -294,7 +297,7 @@ export default function Projects() {
                       <Link
                         href={project.github}
                         target="_blank"
-                        className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-purple-100 hover:text-purple-600 dark:hover:bg-purple-900/30 dark:hover:text-purple-400 transition-colors"
+                        className="p-2 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-cyan-100 hover:text-cyan-600 dark:hover:bg-cyan-900/30 dark:hover:text-cyan-400 transition-colors"
                       >
                         <Github className="h-4 w-4" />
                       </Link>
@@ -304,7 +307,7 @@ export default function Projects() {
                       <Link
                         href={project.demo}
                         target="_blank"
-                        className="text-sm flex items-center font-medium text-purple-600 dark:text-purple-400 hover:text-purple-800 dark:hover:text-purple-300 transition-colors"
+                        className="text-sm flex items-center font-medium text-cyan-600 dark:text-cyan-400 hover:text-cyan-800 dark:hover:text-cyan-300 transition-colors"
                       >
                         View Project
                         <ArrowRight className="w-4 h-4 ml-2" />
@@ -332,7 +335,7 @@ export default function Projects() {
           <Link
             href="https://github.com/shaikhsameer18"
             target="_blank"
-            className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-medium hover:from-purple-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl"
+            className="inline-flex items-center px-6 py-3 rounded-full bg-gradient-to-r from-cyan-600 to-blue-600 text-white font-medium hover:from-cyan-700 hover:to-blue-700 transition-all shadow-lg hover:shadow-xl shadow-cyan-500/25"
           >
             View All Projects on GitHub
             <ArrowRight className="w-4 h-4 ml-2" />

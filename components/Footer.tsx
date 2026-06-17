@@ -1,53 +1,63 @@
-import Link from "next/link";
-import { Code2, Github, Linkedin, Mail } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
+
+const SOCIAL = [
+  { label: "GitHub",   href: "https://github.com/shaikhsameer18",     icon: Github,   external: true  },
+  { label: "LinkedIn", href: "https://linkedin.com/in/sameerahmed08", icon: Linkedin, external: true  },
+  { label: "Email",    href: "mailto:sameer.shaikh0425@gmail.com",     icon: Mail,     external: false },
+] as const;
 
 export default function Footer() {
   return (
-    <footer className="bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 py-6 px-4">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center text-sm text-zinc-600 dark:text-zinc-300 gap-4">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <Code2 className="h-5 w-5 text-violet-600" />
-          <span className="text-lg font-bold bg-gradient-to-r from-violet-500 via-pink-500 to-rose-500 text-transparent bg-clip-text">
-            SAMMY
-          </span>
-        </Link>
+    <footer
+      role="contentinfo"
+      className="border-t border-[#dad7cd] py-8 px-4"
+      style={{ backgroundColor: "#f8f5f0" }}
+    >
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-5">
 
-        <span>
-          {" "}
-          &copy; {new Date().getFullYear()}{" "}
-          <span className="font-medium">Sameer Ahmed</span>. All rights
-          reserved.
-        </span>
-
-        {/* Social Icons */}
-        <div className="flex gap-6">
-          <Link
-            href="https://linkedin.com/in/sameerahmed08"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-violet-500 transition"
-            aria-label="LinkedIn"
+        {/* Identity with $ logo */}
+        <div className="flex items-center gap-3">
+          <div
+            className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{ background: "linear-gradient(135deg, #3a5a40 0%, #344e41 100%)" }}
+            aria-hidden="true"
           >
-            <Linkedin className="h-5 w-5" />
-          </Link>
-          <Link
-            href="https://github.com/shaikhsameer18"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-violet-500 transition"
-            aria-label="GitHub"
-          >
-            <Github className="h-5 w-5" />
-          </Link>
-          <Link
-            href="mailto:sameer.shaikh0425@gmail.com"
-            className="hover:text-violet-500 transition"
-            aria-label="Email"
-          >
-            <Mail className="h-5 w-5" />
-          </Link>
+            <span
+              className="text-[#dad7cd] font-bold leading-none select-none"
+              style={{ fontFamily: "Georgia, serif", fontSize: "18px" }}
+            >
+              $
+            </span>
+          </div>
+          <div>
+            <p className="font-space text-sm font-semibold text-[#1a1f1b] leading-none">
+              Sameer Ahmed Shaikh
+            </p>
+            <p className="font-space text-[11px] text-[#6e7f71] mt-0.5">
+              Cybersecurity Analyst · GRC Analyst · Full-Stack Developer
+            </p>
+          </div>
         </div>
+
+        {/* Copyright */}
+        <p className="font-space text-xs text-[#a3b18a] text-center order-last sm:order-none">
+          &copy; {new Date().getFullYear()} Sameer Ahmed Shaikh. All rights reserved.
+        </p>
+
+        {/* Social */}
+        <nav aria-label="Social media links" className="flex items-center gap-2">
+          {SOCIAL.map(({ label, href, icon: Icon, external }) => (
+            <a
+              key={label}
+              href={href}
+              aria-label={label}
+              {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#dad7cd] text-[#6e7f71] hover:border-[#a3b18a] hover:text-[#3a5a40] hover:bg-[#e8efe9] transition-all duration-200"
+            >
+              <Icon className="h-4 w-4" />
+            </a>
+          ))}
+        </nav>
       </div>
     </footer>
   );
