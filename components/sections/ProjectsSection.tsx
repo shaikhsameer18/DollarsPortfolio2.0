@@ -3,17 +3,16 @@
 import { useState, type ChangeEvent } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Search, X, Terminal, ExternalLink, ShieldCheck, Lightbulb, ChevronRight, Zap } from "lucide-react";
+import { Search, X, Terminal, ExternalLink, ShieldCheck } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
 import { fadeUp, stagger } from "@/lib/animations";
 import { useReveal } from "@/lib/hooks/useReveal";
-import { PROJECTS, SECURITY_PROJECT_IDEAS, type Difficulty, type Impact } from "@/lib/data/projects";
+import { PROJECTS } from "@/lib/data/projects";
 
 export default function ProjectsSection() {
   const { ref, inView } = useReveal();
   const [query,   setQuery]   = useState("");
   const [showAll, setShowAll] = useState(false);
-  const [showRoadmap, setShowRoadmap] = useState(false);
 
   const filtered = PROJECTS.filter(
     (p) =>
@@ -23,18 +22,6 @@ export default function ProjectsSection() {
   );
 
   const displayed = showAll || query ? filtered : filtered.filter((p) => p.featured);
-
-  const DIFF_COLOR: Record<Difficulty, string> = {
-    Easy:   "#00FF88",
-    Medium: "#FFB800",
-    Hard:   "#FF3B5C",
-  };
-
-  const IMPACT_COLOR: Record<Impact, string> = {
-    Low:    "#6B8EAD",
-    Medium: "#FFB800",
-    High:   "#00FF88",
-  };
 
   return (
     <section id="projects" aria-label="Projects" className="section-main relative overflow-hidden">
@@ -143,9 +130,8 @@ export default function ProjectsSection() {
             </m.div>
           </AnimatePresence>
 
-          {/* Show all toggle */}
           {!query && (
-            <m.div variants={fadeUp} className="flex justify-center gap-3 flex-wrap mb-10">
+            <m.div variants={fadeUp} className="flex justify-center mt-6">
               <button onClick={() => setShowAll((v) => !v)} className="btn-cyber-outline text-xs py-2.5 px-6" aria-expanded={showAll}>
                 {showAll ? (
                   <><X className="w-4 h-4" /> Show Featured Only</>
@@ -153,67 +139,8 @@ export default function ProjectsSection() {
                   <><Terminal className="w-4 h-4" /> View All {PROJECTS.length} Projects</>
                 )}
               </button>
-              <button onClick={() => setShowRoadmap((v) => !v)} className="btn-cyber text-xs py-2.5 px-6" aria-expanded={showRoadmap}>
-                <Lightbulb className="w-4 h-4" />
-                {showRoadmap ? "Hide" : "Security Project Roadmap"}
-              </button>
             </m.div>
           )}
-
-          {/* Security Project Roadmap */}
-          <AnimatePresence>
-            {showRoadmap && (
-              <m.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="overflow-hidden"
-              >
-                <div className="rounded-xl border border-[#00FF88]/20 bg-[#00FF88]/03 p-6 sm:p-8">
-                  <div className="flex items-center gap-3 mb-6">
-                    <div className="w-8 h-8 rounded-lg bg-[#00FF88]/10 border border-[#00FF88]/30 flex items-center justify-center">
-                      <Zap className="w-4 h-4 text-[#00FF88]" aria-hidden="true" />
-                    </div>
-                    <div>
-                      <h3 className="font-pliant text-lg font-bold text-[#C4DCF0]">Security Project Roadmap</h3>
-                      <p className="font-mono-jet text-xs text-[#2E4560]">// Build these next to accelerate your security career</p>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                    {SECURITY_PROJECT_IDEAS.map((idea) => (
-                      <div key={idea.title} className="cyber-card p-5">
-                        <div className="flex items-start justify-between gap-3 mb-3">
-                          <h4 className="font-pliant text-base font-bold text-[#C4DCF0] leading-tight">{idea.title}</h4>
-                          <div className="flex gap-1.5 flex-shrink-0">
-                            <span className="px-1.5 py-0.5 rounded font-mono-jet text-[10px] font-semibold"
-                              style={{ background: `${DIFF_COLOR[idea.difficulty]}15`, border: `1px solid ${DIFF_COLOR[idea.difficulty]}30`, color: DIFF_COLOR[idea.difficulty] }}>
-                              {idea.difficulty}
-                            </span>
-                            <span className="px-1.5 py-0.5 rounded font-mono-jet text-[10px] font-semibold"
-                              style={{ background: `${IMPACT_COLOR[idea.impact]}15`, border: `1px solid ${IMPACT_COLOR[idea.impact]}30`, color: IMPACT_COLOR[idea.impact] }}>
-                              {idea.impact} impact
-                            </span>
-                          </div>
-                        </div>
-                        <p className="font-inter-var text-xs text-[#6B8EAD] leading-relaxed mb-3">{idea.desc}</p>
-                        <div className="flex items-start gap-2 p-2.5 rounded-lg bg-[#8B5CF6]/06 border border-[#8B5CF6]/15 mb-3">
-                          <ChevronRight className="w-3 h-3 text-[#8B5CF6] mt-0.5 flex-shrink-0" aria-hidden="true" />
-                          <p className="font-mono-jet text-[10px] text-[#8B5CF6]/90 leading-relaxed">{idea.why}</p>
-                        </div>
-                        <div className="flex flex-wrap gap-1">
-                          {idea.tags.map((t) => (
-                            <span key={t} className="px-2 py-0.5 rounded font-mono-jet text-[10px] text-[#2E4560] border border-[#162030] bg-[#0A1628]">{t}</span>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </m.div>
-            )}
-          </AnimatePresence>
         </m.div>
       </div>
     </section>

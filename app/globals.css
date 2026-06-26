@@ -206,7 +206,7 @@
 
   .skill-badge {
     @apply inline-flex items-center gap-2 rounded-lg border
-           font-medium transition-all duration-200 cursor-default select-none;
+           font-medium transition-all duration-200 cursor-default select-none whitespace-nowrap;
     font-family: 'JetBrains Mono', monospace;
     background-color: var(--bg-card);
     border-color: var(--border);

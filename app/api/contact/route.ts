@@ -61,8 +61,8 @@ function isRateLimited(ip: string): boolean {
 
 const rawOrigins = [
   process.env.NEXT_PUBLIC_SITE_URL,
-  "https://sameerahmed.dev",
-  "https://www.sameerahmed.dev",
+  "https://dollarsportfolio.vercel.app",
+  ...(process.env.NODE_ENV === "development" ? ["http://localhost:3000"] : []),
 ].filter(Boolean) as string[];
 
 const ALLOWED_ORIGINS = new Set(rawOrigins);

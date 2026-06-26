@@ -18,7 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sameerahmed.dev";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dollarsportfolio.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "Governance Risk Compliance",
     "SEBI CSCRF",
     "SOC Analyst",
-    "Sophos Firewall Engineer",
+    "Sophos Firewall Certified Engineer",
     "Vulnerability Assessment",
     "Security Engineer",
     "Full Stack Developer",

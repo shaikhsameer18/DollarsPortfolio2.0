@@ -2,7 +2,7 @@
 
 Cybersecurity-themed personal portfolio built with Next.js 16, React 19, and TypeScript. Showcases experience as a Cybersecurity Engineer, GRC Analyst, and Full-Stack Developer.
 
-**Live:** [sameerahmed.dev](https://sameerahmed.dev)
+**Live:** [sameerahmed.dev](https://dollarsportfolio.vercel.app)
 
 ---
 
@@ -61,7 +61,7 @@ DollarsPortfolio2.0/
 Create a `.env.local` file:
 
 ```env
-NEXT_PUBLIC_SITE_URL=https://sameerahmed.dev
+NEXT_PUBLIC_SITE_URL=https://dollarsportfolio.vercel.app
 FORMSPREE_ENDPOINT=https://formspree.io/f/YOUR_FORM_ID
 ```
 

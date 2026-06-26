@@ -107,13 +107,13 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const SKILL_SIZE_CLS: Record<string, string> = {
-  lg: "px-3.5 py-2 text-xs gap-2",
-  md: "px-3.5 py-2 text-xs gap-2",
-  sm: "px-3.5 py-2 text-xs gap-2",
+  lg: "px-4 py-2.5 text-sm gap-3",
+  md: "px-4 py-2.5 text-sm gap-3",
+  sm: "px-4 py-2.5 text-sm gap-3",
 };
 
 export const SKILL_ICON_CLS: Record<string, string> = {
-  lg: "text-base",
-  md: "text-base",
-  sm: "text-base",
+  lg: "text-lg",
+  md: "text-lg",
+  sm: "text-lg",
 };

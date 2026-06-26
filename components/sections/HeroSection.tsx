@@ -82,7 +82,7 @@ export default function HeroSection() {
                 "Cybersecurity Engineer",    2500,
                 "GRC Analyst",              2200,
                 "SOC Specialist",           2000,
-                "Sophos Certified Engineer", 2000,
+                "Sophos Firewall Certified Engineer", 2000,
                 "Full-Stack Developer",     2000,
               ]}
               wrapper="span"
