@@ -2,275 +2,312 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Design tokens — Earthy Forest Hues ──────────────────────────────────── */
 :root {
-  /* Backgrounds — warm cream earth tones */
-  --bg-main:    #f8f5f0;   /* warm cream — main page background  */
-  --bg-alt:     #e8e4da;   /* dusty warm — alternating sections  */
-  --bg-card:    #FFFFFF;   /* white — cards / panels             */
-  --bg-muted:   #f2ede6;   /* subtle hover fill                  */
+  --bg-space:      #050C14;
+  --bg-deep:       #030811;
+  --bg-card:       #0A1628;
+  --bg-card-2:     #0D1E34;
+  --border:        #162030;
+  --border-2:      #1E3050;
+  --border-glow:   rgba(0,212,255,0.35);
 
-  /* Borders */
-  --border:      #dad7cd;  /* Dust Grey */
-  --border-hover:#a3b18a;  /* Dry Sage  */
+  --cyan:          #00D4FF;
+  --cyan-dim:      #0099BB;
+  --green:         #00FF88;
+  --green-dim:     #00BB66;
+  --purple:        #8B5CF6;
+  --red:           #FF3B5C;
+  --amber:         #FFB800;
 
-  /* Text */
-  --text-primary:   #1a1f1b; /* near black with forest tint */
-  --text-secondary: #3d4f41; /* dark forest green text      */
-  --text-muted:     #6e7f71; /* muted forest grey-green     */
-
-  /* Forest Brand — Earthy Forest Hues */
-  --dust-grey:    #dad7cd; /* Dust Grey   — borders, light bg  */
-  --dry-sage:     #a3b18a; /* Dry Sage    — soft accent, tags   */
-  --fern:         #588157; /* Fern        — mid accent, icons   */
-  --hunter:       #3a5a40; /* Hunter Green— primary CTA, strong */
-  --pine:         #344e41; /* Pine Teal   — hover, deep         */
-
-  /* Light tints */
-  --fern-light:   #eef3e8; /* very light fern background  */
-  --fern-border:  #c5d9b5; /* light fern border           */
-  --hunter-light: #e8efe9; /* very light hunter bg        */
-  --sage-light:   #f2f5ee; /* very light sage bg          */
-  --sage-border:  #dde6d0; /* light sage border           */
+  --text:          #C4DCF0;
+  --text-dim:      #6B8EAD;
+  --text-muted:    #2E4560;
 }
 
-/* ─── Base ───────────────────────────────────────────────────────────────── */
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: var(--bg-main);
+    background-color: var(--bg-space);
   }
 
   body {
     @apply antialiased leading-relaxed;
-    font-family: var(--font-inter), system-ui, sans-serif;
-    background-color: var(--bg-main);
-    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--bg-space);
+    color: var(--text);
   }
 
   h1, h2, h3, h4 {
-    font-family: var(--font-playfair), Georgia, serif;
-    letter-spacing: -0.01em;
-    line-height: 1.18;
-    color: var(--text-primary);
+    font-family: 'Pliant', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    color: var(--text);
   }
 
   ::selection {
-    background: rgba(88, 129, 87, 0.18);
-    color: var(--text-primary);
+    background: rgba(0, 212, 255, 0.2);
+    color: #ffffff;
   }
 
   :focus-visible {
-    outline: 2px solid var(--hunter);
+    outline: 2px solid var(--cyan);
     outline-offset: 3px;
     border-radius: 4px;
   }
 
-  /* Scrollbar — forest-tinted subtle */
-  ::-webkit-scrollbar       { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg-alt); }
+  ::-webkit-scrollbar       { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg-deep); }
   ::-webkit-scrollbar-thumb {
-    background: var(--dry-sage);
-    border-radius: 3px;
+    background: var(--border-2);
+    border-radius: 2px;
   }
-  ::-webkit-scrollbar-thumb:hover { background: var(--fern); }
-  * { scrollbar-width: thin; scrollbar-color: var(--dry-sage) var(--bg-alt); }
+  ::-webkit-scrollbar-thumb:hover { background: var(--cyan-dim); }
+  * { scrollbar-width: thin; scrollbar-color: var(--border-2) var(--bg-deep); }
 }
 
-/* ─── Layout utilities ───────────────────────────────────────────────────── */
 @layer components {
 
   .section-main {
-    @apply min-h-[90vh] flex flex-col justify-center py-20 px-4 sm:px-6 lg:px-8;
-    background-color: var(--bg-main);
+    @apply flex flex-col justify-center py-20 sm:py-28 px-4 sm:px-6 lg:px-8;
+    background-color: var(--bg-space);
   }
 
   .section-alt {
-    @apply min-h-[90vh] flex flex-col justify-center py-20 px-4 sm:px-6 lg:px-8;
-    background-color: var(--bg-alt);
+    @apply flex flex-col justify-center py-20 sm:py-28 px-4 sm:px-6 lg:px-8;
+    background-color: var(--bg-deep);
   }
 
   .section-inner {
     @apply max-w-6xl mx-auto w-full;
   }
 
-  /* Section heading group */
   .section-label {
-    font-family: var(--font-space), system-ui, sans-serif;
-    @apply text-xs font-semibold tracking-[0.18em] uppercase;
-    color: var(--fern);
+    font-family: 'JetBrains Mono', monospace;
+    @apply text-xs font-medium tracking-[0.22em] uppercase;
+    color: var(--cyan);
+  }
+
+  .section-label::before {
+    content: "// ";
+    opacity: 0.5;
   }
 
   .section-title {
-    font-family: var(--font-playfair), Georgia, serif;
+    font-family: 'Pliant', system-ui, sans-serif;
     @apply text-4xl sm:text-5xl font-bold;
-    color: var(--text-primary);
+    color: var(--text);
   }
 
   .section-subtitle {
-    font-family: var(--font-inter), system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
     @apply text-base leading-relaxed;
-    color: var(--text-muted);
+    color: var(--text-dim);
     max-width: 40rem;
   }
 
-  /* Forest gradient divider */
-  .forest-divider {
-    @apply w-10 h-[3px] rounded-full mt-3;
-    background: linear-gradient(90deg, var(--fern), var(--dry-sage));
+  .cyber-divider {
+    @apply w-16 h-[2px] rounded-full mt-3;
+    background: linear-gradient(90deg, var(--cyan), transparent);
   }
 
-  /* legacy alias kept for any remaining uses */
-  .blue-divider {
-    @apply w-10 h-[3px] rounded-full mt-3;
-    background: linear-gradient(90deg, var(--fern), var(--dry-sage));
-  }
-
-  /* ── Card ── */
-  .pro-card {
-    @apply rounded-2xl border transition-all duration-200;
+  .cyber-card {
+    @apply rounded-xl border transition-all duration-300;
     background-color: var(--bg-card);
     border-color: var(--border);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
   }
-  .pro-card:hover {
-    border-color: var(--dry-sage);
-    box-shadow: 0 4px 20px rgba(58,90,64,0.10), 0 2px 6px rgba(0,0,0,0.06);
+
+  .cyber-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid transparent;
+    background: linear-gradient(135deg, rgba(0,212,255,0.08) 0%, transparent 60%) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+  }
+
+  .cyber-card:hover::before { opacity: 1; }
+
+  .cyber-card:hover {
+    border-color: rgba(0,212,255,0.3);
+    box-shadow: 0 4px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(0,212,255,0.15);
     transform: translateY(-2px);
   }
 
-  /* ── Buttons ── */
-  .btn-primary {
-    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
-           font-space text-sm font-semibold text-white
-           transition-all duration-200
-           focus-visible:ring-2 focus-visible:ring-offset-2;
-    background-color: var(--hunter);
-    --tw-ring-color: var(--hunter);
-    box-shadow: 0 2px 8px rgba(58,90,64,0.20);
+  .btn-cyber {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold
+           transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--bg-space);
+    background: var(--cyan);
+    --tw-ring-color: var(--cyan);
+    box-shadow: 0 0 12px rgba(0,212,255,0.25);
   }
-  .btn-primary:hover {
-    background-color: var(--pine);
-    box-shadow: 0 4px 16px rgba(58,90,64,0.28);
+  .btn-cyber:hover {
+    background: #22E0FF;
+    box-shadow: 0 0 24px rgba(0,212,255,0.5), 0 0 48px rgba(0,212,255,0.2);
     transform: translateY(-1px);
   }
 
-  .btn-outline {
-    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg
-           font-space text-sm font-medium
-           border transition-all duration-200
-           focus-visible:ring-2 focus-visible:ring-offset-2;
-    color: var(--hunter);
-    border-color: var(--hunter);
+  .btn-cyber-outline {
+    @apply inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold
+           border transition-all duration-200 focus-visible:ring-2 focus-visible:ring-offset-2;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--cyan);
+    border-color: rgba(0,212,255,0.4);
     background: transparent;
-    --tw-ring-color: var(--hunter);
+    --tw-ring-color: var(--cyan);
   }
-  .btn-outline:hover {
-    background-color: var(--hunter-light);
+  .btn-cyber-outline:hover {
+    border-color: var(--cyan);
+    background: rgba(0,212,255,0.08);
+    box-shadow: 0 0 12px rgba(0,212,255,0.15);
   }
 
-  .btn-ghost {
-    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg
-           font-space text-sm font-medium
+  .btn-cyber-ghost {
+    @apply inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium
            border transition-all duration-200;
-    color: var(--text-secondary);
-    border-color: var(--border);
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-dim);
+    border-color: var(--border-2);
     background: transparent;
   }
-  .btn-ghost:hover {
-    color: var(--hunter);
-    border-color: var(--dry-sage);
-    background-color: var(--sage-light);
+  .btn-cyber-ghost:hover {
+    color: var(--cyan);
+    border-color: rgba(0,212,255,0.4);
+    background: rgba(0,212,255,0.05);
   }
 
-  /* ── Skill badge ── */
+  .terminal-box {
+    @apply rounded-lg border p-4;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg-deep);
+    border-color: var(--border);
+  }
+
+  .terminal-box::before {
+    content: "circle circle circle";
+    display: block;
+    color: var(--border-2);
+    font-size: 6px;
+    letter-spacing: 0.5em;
+    margin-bottom: 12px;
+    font-family: inherit;
+    overflow: hidden;
+    height: 8px;
+  }
+
   .skill-badge {
     @apply inline-flex items-center gap-2 rounded-lg border
-           font-space font-medium
-           transition-all duration-200 cursor-default select-none;
+           font-medium transition-all duration-200 cursor-default select-none;
+    font-family: 'JetBrains Mono', monospace;
     background-color: var(--bg-card);
     border-color: var(--border);
-    color: var(--text-secondary);
+    color: var(--text-dim);
+    font-size: 0.75rem;
   }
   .skill-badge:hover {
-    border-color: var(--dry-sage);
-    color: var(--hunter);
-    background-color: var(--fern-light);
+    border-color: rgba(0,212,255,0.4);
+    color: var(--cyan);
+    background-color: rgba(0,212,255,0.05);
     transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(88,129,87,0.14);
+    box-shadow: 0 0 8px rgba(0,212,255,0.12);
   }
 
-  /* ── Form inputs ── */
   .form-input {
-    @apply w-full rounded-lg border px-4 py-2.5 font-inter text-sm
-           transition-colors duration-200
-           focus:outline-none focus:ring-2 focus:border-transparent;
-    background-color: var(--bg-card);
-    border-color: var(--border);
-    color: var(--text-primary);
-    --tw-ring-color: var(--hunter);
+    @apply w-full rounded-lg border px-4 py-3 text-sm
+           transition-all duration-200
+           focus:outline-none focus:ring-1 focus:border-transparent;
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg-deep);
+    border-color: var(--border-2);
+    color: var(--text);
+    --tw-ring-color: var(--cyan);
   }
   .form-input:focus {
-    ring-color: var(--hunter);
-    border-color: var(--hunter);
+    border-color: var(--cyan);
+    box-shadow: 0 0 0 1px var(--cyan), 0 0 12px rgba(0,212,255,0.15);
   }
   .form-input::placeholder {
     color: var(--text-muted);
   }
 
   .form-label {
-    @apply block mb-1.5 font-space text-xs font-semibold tracking-wide;
-    color: var(--text-secondary);
+    @apply block mb-1.5 text-xs font-semibold tracking-wider uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--cyan);
+  }
+
+  .neon-tag {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium;
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(0,212,255,0.08);
+    border: 1px solid rgba(0,212,255,0.2);
+    color: var(--cyan-dim);
+  }
+
+  .neon-tag-green {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium;
+    font-family: 'JetBrains Mono', monospace;
+    background: rgba(0,255,136,0.07);
+    border: 1px solid rgba(0,255,136,0.2);
+    color: var(--green-dim);
+  }
+
+  .cyber-timeline-bar {
+    @apply absolute left-0 top-0 bottom-0 w-[1px] rounded-full;
+    background: linear-gradient(180deg, var(--cyan) 0%, rgba(0,212,255,0.05) 100%);
+  }
+
+  .cyber-grid-bg {
+    background-image:
+      linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .scan-overlay {
+    position: relative;
+    overflow: hidden;
+  }
+  .scan-overlay::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(0,212,255,0.4), transparent);
+    animation: scan 3s ease-in-out infinite;
   }
 }
 
-/* ─── Utility extras ─────────────────────────────────────────────────────── */
 @layer utilities {
-  .font-playfair { font-family: var(--font-playfair), Georgia, serif; }
-  .font-space    { font-family: var(--font-space), system-ui, sans-serif; }
-  .font-inter    { font-family: var(--font-inter), system-ui, sans-serif; }
+  .font-pliant    { font-family: 'Pliant',        system-ui, sans-serif; }
+  .font-orbitron  { font-family: 'Orbitron',      system-ui, sans-serif; }
+  .font-mono-jet  { font-family: 'JetBrains Mono',monospace; }
+  .font-inter-var { font-family: 'Inter',          system-ui, sans-serif; }
 
-  /* Forest gradient text */
-  .text-forest-gradient {
+  .text-cyber-gradient {
     @apply bg-clip-text text-transparent;
-    background-image: linear-gradient(135deg, var(--hunter) 0%, var(--fern) 100%);
+    background-image: linear-gradient(135deg, var(--cyan) 0%, var(--green) 100%);
   }
 
-  .text-fern-accent { color: var(--fern); }
-  .text-hunter-accent { color: var(--hunter); }
-
-  /* Tag pills */
-  .domain-tag {
-    @apply inline-flex items-center gap-1.5 px-3 py-1 rounded-full
-           font-space text-xs font-semibold border;
+  .text-cyber-purple-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--cyan) 0%, var(--purple) 100%);
   }
 
-  /* Forest / hunter tag (replaces old "blue" tag) */
-  .domain-tag-blue {
-    @apply domain-tag;
-    color: var(--hunter);
-    border-color: rgba(58,90,64,0.25);
-    background-color: var(--hunter-light);
-  }
+  .glow-cyan  { text-shadow: 0 0 8px rgba(0,212,255,0.5); }
+  .glow-green { text-shadow: 0 0 8px rgba(0,255,136,0.5); }
 
-  /* Fern / sage tag (replaces old "green" tag) */
-  .domain-tag-green {
-    @apply domain-tag;
-    color: var(--fern);
-    border-color: rgba(88,129,87,0.28);
-    background-color: var(--fern-light);
-  }
-
-  .domain-tag-neutral {
-    @apply domain-tag;
-    color: var(--text-muted);
-    border-color: var(--border);
-    background-color: var(--bg-muted);
-  }
-
-  /* Timeline */
-  .timeline-bar {
-    @apply absolute left-0 top-0 bottom-0 w-[2px] rounded-full;
-    background: linear-gradient(180deg, var(--fern) 0%, rgba(88,129,87,0.12) 100%);
+  .border-glow-cyan {
+    border-color: rgba(0,212,255,0.35);
+    box-shadow: 0 0 0 1px rgba(0,212,255,0.15), 0 0 16px rgba(0,212,255,0.08);
   }
 }

@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
-// ─── Input schema (server-side validation via Zod) ───────────────────────────
-
 const ContactSchema = z.object({
   name: z
     .string()
@@ -24,26 +22,29 @@ const ContactSchema = z.object({
     .min(10, "Message must be at least 10 characters")
     .max(2000, "Message too long — please keep it under 2000 characters")
     .trim(),
-  // Honeypot field: bots fill this; humans leave it empty
   _trap: z.string().max(0, "Bot detected").optional(),
 });
 
-// ─── Simple in-memory rate limiter ───────────────────────────────────────────
-// NOTE: This in-memory store resets on each cold-start in serverless
-// environments. For production persistence, replace with Upstash Redis or
-// Vercel KV:  https://vercel.com/docs/storage/vercel-kv
-
 interface RateRecord {
-  count: number;
+  count:   number;
   resetAt: number;
 }
 
 const rateLimitStore = new Map<string, RateRecord>();
 
-const RATE_LIMIT_MAX    = 3;                  // max submissions per window
-const RATE_LIMIT_WINDOW = 60 * 60 * 1000;    // 1-hour window
+const RATE_LIMIT_MAX    = 3;
+const RATE_LIMIT_WINDOW = 60 * 60 * 1000;
+
+function purgeExpired(): void {
+  const now = Date.now();
+  for (const [ip, record] of rateLimitStore) {
+    if (now > record.resetAt) rateLimitStore.delete(ip);
+  }
+}
 
 function isRateLimited(ip: string): boolean {
+  purgeExpired();
+
   const now   = Date.now();
   const entry = rateLimitStore.get(ip);
 
@@ -58,32 +59,26 @@ function isRateLimited(ip: string): boolean {
   return false;
 }
 
-// ─── Allowed origins (CSRF mitigation) ───────────────────────────────────────
-const ALLOWED_ORIGINS = new Set([
-  process.env.NEXT_PUBLIC_SITE_URL ?? "",
+const rawOrigins = [
+  process.env.NEXT_PUBLIC_SITE_URL,
   "https://sameerahmed.dev",
   "https://www.sameerahmed.dev",
-  // Allow requests with no origin header (e.g., Postman in dev, curl)
-]);
+].filter(Boolean) as string[];
+
+const ALLOWED_ORIGINS = new Set(rawOrigins);
 
 function isOriginAllowed(request: NextRequest): boolean {
   const origin = request.headers.get("origin");
-  // If no Origin header the request is same-origin or from a non-browser client;
-  // allow it so curl/Postman testing still works.
   if (!origin) return true;
   return ALLOWED_ORIGINS.has(origin);
 }
 
-// ─── Shared security headers for all responses ───────────────────────────────
 const SECURITY_HEADERS = {
-  "Cache-Control": "no-store, no-cache, must-revalidate",
+  "Cache-Control":          "no-store, no-cache, must-revalidate",
   "X-Content-Type-Options": "nosniff",
 };
 
-// ─── Route handler ────────────────────────────────────────────────────────────
-
 export async function POST(request: NextRequest) {
-  // ── 1. CSRF / Origin check ────────────────────────────────────────────────
   if (!isOriginAllowed(request)) {
     return NextResponse.json(
       { error: "Forbidden." },
@@ -91,7 +86,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // ── 2. Content-Type guard ─────────────────────────────────────────────────
   const contentType = request.headers.get("content-type") ?? "";
   if (!contentType.includes("application/json")) {
     return NextResponse.json(
@@ -100,13 +94,11 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // ── 3. Extract client IP ──────────────────────────────────────────────────
   const ip =
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
     request.headers.get("x-real-ip") ??
     "127.0.0.1";
 
-  // ── 4. Rate limiting ──────────────────────────────────────────────────────
   if (isRateLimited(ip)) {
     return NextResponse.json(
       { error: "Too many requests. Please try again later." },
@@ -114,7 +106,6 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  // ── 5. Parse + validate body ──────────────────────────────────────────────
   let body: unknown;
   try {
     body = await request.json();
@@ -135,31 +126,24 @@ export async function POST(request: NextRequest) {
 
   const { name, email, subject, message, _trap } = parsed.data;
 
-  // ── 6. Honeypot check ─────────────────────────────────────────────────────
   if (_trap) {
-    // Silently "succeed" so bots don't know they were caught.
     return NextResponse.json({ ok: true }, { headers: SECURITY_HEADERS });
   }
 
-  // ── 7. Resolve Formspree endpoint from env ────────────────────────────────
   const endpoint = process.env.FORMSPREE_ENDPOINT;
   if (!endpoint) {
-    console.error("[contact] FORMSPREE_ENDPOINT environment variable is not set.");
+    console.error("[contact] FORMSPREE_ENDPOINT is not configured.");
     return NextResponse.json(
       { error: "Contact service is not configured." },
       { status: 503, headers: SECURITY_HEADERS }
     );
   }
 
-  // ── 8. Forward to Formspree (server-side — endpoint never reaches client) ──
   let formspreeRes: Response;
   try {
     formspreeRes = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
+      method:  "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({ name, email, subject, message }),
     });
   } catch (err) {
@@ -181,10 +165,13 @@ export async function POST(request: NextRequest) {
   return NextResponse.json({ ok: true }, { headers: SECURITY_HEADERS });
 }
 
-// Reject any other HTTP methods
 export async function GET() {
   return NextResponse.json(
     { error: "Method not allowed." },
     { status: 405, headers: { ...SECURITY_HEADERS, Allow: "POST" } }
   );
 }
+
+export async function PUT()    { return GET(); }
+export async function PATCH()  { return GET(); }
+export async function DELETE() { return GET(); }

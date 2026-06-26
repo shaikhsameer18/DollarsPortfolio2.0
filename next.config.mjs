@@ -1,50 +1,45 @@
-/** @type {import('next').NextConfig} */
+import path from "path";
+import { fileURLToPath } from "url";
 
-// Next.js dev mode uses eval()-based webpack source maps (HMR).
-// 'unsafe-eval' must be present in dev; it is dropped in production builds.
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig = {
-  // Disable source-map generation in production to prevent source code exposure.
   productionBrowserSourceMaps: false,
+
+  turbopack: { root: __dirname },
+
+  async redirects() {
+    return [
+      { source: "/about",    destination: "/",  permanent: false },
+      { source: "/projects", destination: "/",  permanent: false },
+      { source: "/skills",   destination: "/",  permanent: false },
+      { source: "/contact",  destination: "/",  permanent: false },
+    ];
+  },
 
   async headers() {
     return [
       {
         source: "/(.*)",
         headers: [
-          // Prevent clickjacking
-          { key: "X-Frame-Options", value: "DENY" },
-          // Prevent MIME sniffing
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          // Referrer — send origin only on same-site, nothing cross-origin
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-          // Restrict browser feature access
+          { key: "X-DNS-Prefetch-Control",            value: "off"  },
+          { key: "X-Frame-Options",                   value: "DENY" },
+          { key: "X-Content-Type-Options",            value: "nosniff" },
+          { key: "X-Permitted-Cross-Domain-Policies", value: "none" },
+          { key: "Referrer-Policy",                   value: "strict-origin-when-cross-origin" },
+          { key: "Cross-Origin-Opener-Policy",        value: "same-origin" },
+          { key: "Cross-Origin-Resource-Policy",      value: "same-origin" },
+          { key: "Cross-Origin-Embedder-Policy",      value: "unsafe-none" },
           {
             key: "Permissions-Policy",
-            value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+            value: "camera=(), microphone=(), geolocation=(), browsing-topics=(), payment=()",
           },
-          // Force HTTPS for 2 years — only takes effect after the first HTTPS visit
           {
             key: "Strict-Transport-Security",
             value: "max-age=63072000; includeSubDomains; preload",
           },
-          /*
-           * Content-Security-Policy
-           *
-           * Security notes:
-           *  - 'unsafe-inline' on script-src is required by Next.js App Router
-           *    for server-injected hydration scripts. To fully harden, wire up a
-           *    nonce-based CSP via Next.js middleware (see Next docs).
-           *  - 'unsafe-eval' is included ONLY in development — Next.js webpack
-           *    HMR uses eval()-based source maps which the browser blocks without it.
-           *    Production builds do not use eval, so it is omitted there.
-           *  - connect-src 'self' covers /api/contact — Formspree is called
-           *    server-side only, so it does not need a CSP entry.
-           *  - frame-ancestors 'none' duplicates X-Frame-Options for modern browsers.
-           *  - img-src allows 'data:' and 'blob:' for Next.js image optimisation,
-           *    and 'https:' for any remote images (avatars, og images).
-           */
           {
             key: "Content-Security-Policy",
             value: [
@@ -64,7 +59,6 @@ const nextConfig = {
           },
         ],
       },
-      // Prevent caching of API responses
       {
         source: "/api/(.*)",
         headers: [

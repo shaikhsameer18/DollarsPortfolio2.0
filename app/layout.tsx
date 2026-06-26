@@ -1,33 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, Space_Grotesk } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-
-// ─── Fonts ────────────────────────────────────────────────────────────────────
+import MotionProvider from "@/components/MotionProvider";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-inter",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  variable: "--font-playfair",
-  display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
-  style: ["normal", "italic"],
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  variable: "--font-space",
   display: "swap",
   weight: ["300", "400", "500", "600", "700"],
 });
-
-// ─── SEO Metadata ─────────────────────────────────────────────────────────────
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sameerahmed.dev";
 
@@ -65,13 +54,12 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: "Sameer Ahmed Shaikh — Portfolio",
-    title:
-      "Sameer Ahmed Shaikh | Cybersecurity Analyst · GRC Analyst · Full-Stack Developer",
+    title: "Sameer Ahmed Shaikh | Cybersecurity Analyst · GRC · Full-Stack",
     description:
       "Cybersecurity Engineer and GRC Analyst at Zoffec Infotech Pvt. Ltd. with expertise in firewall security, SEBI CSCRF compliance, SOC operations, and secure full-stack development.",
     images: [
       {
-        url: "/assets/samcrop.jpg",
+        url: "/assets/sam.jpg",
         width: 1200,
         height: 630,
         alt: "Sameer Ahmed Shaikh — Cybersecurity Analyst & GRC Analyst",
@@ -81,10 +69,10 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title:
-      "Sameer Ahmed Shaikh | Cybersecurity Analyst · GRC Analyst · Full-Stack Developer",
+      "Sameer Ahmed Shaikh | Cybersecurity Analyst · GRC · Full-Stack Developer",
     description:
-      "Cybersecurity Analyst and GRC Analyst specialising in SEBI CSCRF compliance, SOC operations, Sophos Firewall, and secure web development.",
-    images: ["/assets/samcrop.jpg"],
+      "Cybersecurity Analyst specialising in SEBI CSCRF compliance, SOC operations, Sophos Firewall, and secure web development.",
+    images: ["/assets/sam.jpg"],
   },
   robots: {
     index: true,
@@ -98,18 +86,15 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/logo.svg",    type: "image/svg+xml", sizes: "any" },
+      { url: "/favicon.ico", type: "image/x-icon", sizes: "any" },
     ],
-    apple: "/favicon.svg",
+    apple: "/favicon.ico",
   },
-  // NOTE: Add your real Google Search Console verification token here when ready.
-  // verification: { google: "YOUR_REAL_TOKEN" },
 };
 
-// ─── Structured data (JSON-LD) ────────────────────────────────────────────────
-// Data is fully static and hardcoded — no user input is rendered here,
-// so dangerouslySetInnerHTML is safe in this context.
+function safeJsonLd(obj: unknown): string {
+  return JSON.stringify(obj).replace(/</g, "\\u003c");
+}
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -137,11 +122,7 @@ const jsonLd = {
     "SEBI CSCRF",
     "SOC Operations",
     "Sophos Firewall",
-    "Firewall Configuration",
     "Vulnerability Assessment",
-    "Endpoint Security",
-    "Risk Management",
-    "Compliance",
     "React",
     "Next.js",
     "Node.js",
@@ -152,13 +133,8 @@ const jsonLd = {
     "@type": "CollegeOrUniversity",
     name: "M.H. Saboo Siddik College of Engineering",
   },
-  worksFor: {
-    "@type": "Organization",
-    name: "Zoffec Infotech Pvt. Ltd.",
-  },
+  worksFor: { "@type": "Organization", name: "Zoffec Infotech Pvt. Ltd." },
 };
-
-// ─── Layout ───────────────────────────────────────────────────────────────────
 
 export default function RootLayout({
   children,
@@ -168,29 +144,41 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${playfair.variable} ${spaceGrotesk.variable}`}
+      className={`${inter.className} ${jetbrainsMono.className}`}
       suppressHydrationWarning
     >
       <head>
-        {/* Static JSON-LD — no user input rendered here */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Pliant:ital,opsz,wght@0,6..144,100..900;1,6..144,100..900&family=Orbitron:wght@400;700;900&display=swap"
+          rel="stylesheet"
+        />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }}
         />
       </head>
-      <body className="bg-[#f8f5f0] text-[#1a1f1b] font-inter antialiased overflow-x-hidden">
-        {/* Accessibility: skip to main content */}
+      <body className="bg-[#050C14] text-[#C4DCF0] antialiased overflow-x-hidden">
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[#3a5a40] focus:text-white focus:rounded-lg focus:font-space focus:text-sm focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-[#00D4FF] focus:text-[#050C14] focus:rounded-lg focus:font-mono-jet focus:text-sm focus:shadow-lg"
         >
           Skip to main content
         </a>
-        <Navbar />
-        <main id="main-content" tabIndex={-1}>
-          {children}
-        </main>
-        <Footer />
+        <MotionProvider>
+          <Navbar />
+          <main id="main-content" tabIndex={-1}>
+            {children}
+          </main>
+          <Footer />
+        </MotionProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
