@@ -80,12 +80,12 @@ export default function ProjectsSection() {
                     className="cyber-card group flex flex-col"
                     aria-label={`Project: ${project.title}`}>
 
-                    {/* Image */}
-                    <div className="relative h-44 overflow-hidden rounded-t-xl flex-shrink-0">
+                    {/* Image — object-contain so the whole screenshot is visible, no crop */}
+                    <div className="relative h-48 overflow-hidden rounded-t-xl flex-shrink-0 bg-[#030811]">
                       <Image src={project.image} alt={`${project.title} screenshot`} fill
-                        className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                        className="object-contain object-center group-hover:scale-[1.03] transition-transform duration-500"
                         sizes="(max-width: 640px) 100vw, 50vw" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628] via-[#0A1628]/20 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#030811]/70 via-transparent to-transparent" />
                       {project.security && (
                         <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-[#00FF88]/15 border border-[#00FF88]/35 backdrop-blur-sm">
                           <ShieldCheck className="w-3 h-3 text-[#00FF88]" aria-hidden="true" />
