@@ -13,6 +13,7 @@ import {
 import { FaGithub } from "react-icons/fa";
 import { fadeUp, stagger } from "@/lib/animations";
 import { useReveal } from "@/lib/hooks/useReveal";
+import RuleEyebrow from "@/components/RuleEyebrow";
 
 type FormData = {
   name: string;
@@ -125,9 +126,9 @@ export default function ContactSection() {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
-          <m.p variants={fadeUp} className="section-label mb-3">
-            Get in Touch
-          </m.p>
+          <m.div variants={fadeUp} className="mb-3">
+            <RuleEyebrow n={6} target="/contact" label="Get in Touch" verdict="ESTABLISHED" />
+          </m.div>
           <m.h2 variants={fadeUp} className="section-title mb-2">
             Initiate <span className="text-cyber-gradient">Contact</span>
           </m.h2>

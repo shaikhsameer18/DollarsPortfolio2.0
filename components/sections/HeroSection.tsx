@@ -5,26 +5,60 @@ import { m } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 import { Linkedin, Mail, Download, ArrowDown } from "lucide-react";
 import { FaGithub } from "react-icons/fa";
+import HeroNetworkCanvas from "@/components/HeroNetworkCanvas";
 
-// Defined outside component so useEffect dependency array is stable (C3 fix)
-const BOOT_SEQUENCE = "Initializing identity matrix...";
+// A short authentication log — typed line by line, echoing the access-control
+// language of Sameer's actual work instead of a generic boot message.
+const AUTH_LOG = [
+  { cmd: "whoami",              out: "sameer-ahmed-shaikh"                              },
+  { cmd: "id",                  out: "groups=(security,grc,fullstack-dev)"              },
+  { cmd: "./verify-clearance.sh", out: "ACCESS GRANTED", ok: true                       },
+] as const;
 
-
-export default function HeroSection() {
-  const [displayText, setDisplayText] = useState("");
+function useTypedLog(lines: readonly { cmd: string; out: string; ok?: boolean }[]) {
+  const [done, setDone] = useState<{ cmd: string; out: string; ok?: boolean }[]>([]);
+  const [typing, setTyping] = useState({ field: "cmd" as "cmd" | "out", text: "" });
 
   useEffect(() => {
-    let i = 0;
-    const timer = setInterval(() => {
-      if (i < BOOT_SEQUENCE.length) {
-        setDisplayText(BOOT_SEQUENCE.slice(0, i + 1));
-        i++;
-      } else {
-        clearInterval(timer);
+    let lineIdx = 0;
+    let field: "cmd" | "out" = "cmd";
+    let charIdx = 0;
+    let timer: ReturnType<typeof setInterval>;
+
+    const tick = () => {
+      const line = lines[lineIdx];
+      const source = field === "cmd" ? line.cmd : line.out;
+
+      if (charIdx <= source.length) {
+        setTyping({ field, text: source.slice(0, charIdx) });
+        charIdx++;
+        return;
       }
-    }, 38);
+
+      if (field === "cmd") {
+        field = "out";
+        charIdx = 0;
+        return;
+      }
+
+      setDone((prev) => [...prev, line]);
+      lineIdx++;
+      field = "cmd";
+      charIdx = 0;
+
+      if (lineIdx >= lines.length) clearInterval(timer);
+    };
+
+    timer = setInterval(tick, 32);
     return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  return { done, typing };
+}
+
+export default function HeroSection() {
+  const { done, typing } = useTypedLog(AUTH_LOG);
 
   return (
     <section
@@ -33,6 +67,7 @@ export default function HeroSection() {
       className="relative min-h-screen flex flex-col items-center justify-center px-4 pt-16 pb-24 overflow-hidden"
       style={{ background: "#050C14" }}
     >
+      <HeroNetworkCanvas />
       <div className="absolute inset-0 pointer-events-none cyber-grid-bg" aria-hidden="true" />
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[500px] pointer-events-none"
@@ -63,11 +98,34 @@ export default function HeroSection() {
             <span className="w-2.5 h-2.5 rounded-full bg-[#FFB800]/60 inline-block" />
             <span className="w-2.5 h-2.5 rounded-full bg-[#00FF88]/60 inline-block" />
           </div>
-          <span className="text-[#00FF88]">root@sameer</span>
-          <span className="text-[#2E4560]">:~$ </span>
-          <span aria-hidden="true" className="text-[#00D4FF]">&gt; </span>
-          <span className="text-[#C4DCF0]">{displayText}</span>
-          <span className="inline-block w-[7px] h-[14px] bg-[#00D4FF] align-middle ml-0.5 animate-[cursor-blink_1s_step-end_infinite]" aria-hidden="true" />
+
+          {done.map((line, i) => (
+            <div key={i} className="mb-1.5 last:mb-0">
+              <span className="text-[#00FF88]">root@sameer</span>
+              <span className="text-[#2E4560]">:~$ </span>
+              <span className="text-[#C4DCF0]">{line.cmd}</span>
+              <div className={line.ok ? "text-[#00FF88] font-bold pl-4" : "text-[#6B8EAD] pl-4"}>
+                {line.ok ? "✓ " : ""}
+                {line.out}
+              </div>
+            </div>
+          ))}
+
+          {done.length < AUTH_LOG.length && (
+            <div>
+              <span className="text-[#00FF88]">root@sameer</span>
+              <span className="text-[#2E4560]">:~$ </span>
+              {typing.field === "cmd" ? (
+                <span className="text-[#C4DCF0]">{typing.text}</span>
+              ) : (
+                <span className="text-[#C4DCF0]">{AUTH_LOG[done.length].cmd}</span>
+              )}
+              {typing.field === "out" && (
+                <div className="text-[#6B8EAD] pl-4">{typing.text}</div>
+              )}
+              <span className="inline-block w-[7px] h-[14px] bg-[#00D4FF] align-middle ml-0.5 animate-[cursor-blink_1s_step-end_infinite]" aria-hidden="true" />
+            </div>
+          )}
         </m.div>
 
         <m.div
@@ -82,7 +140,6 @@ export default function HeroSection() {
                 "Cybersecurity Engineer",    2500,
                 "GRC Analyst",              2200,
                 "SOC Specialist",           2000,
-                "Sophos Firewall Certified Engineer", 2000,
                 "Full-Stack Developer",     2000,
               ]}
               wrapper="span"

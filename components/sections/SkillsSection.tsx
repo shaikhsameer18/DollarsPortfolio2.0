@@ -4,6 +4,7 @@ import { useState } from "react";
 import { m, AnimatePresence } from "framer-motion";
 import { fadeUp, stagger } from "@/lib/animations";
 import { useReveal } from "@/lib/hooks/useReveal";
+import RuleEyebrow from "@/components/RuleEyebrow";
 import { SKILLS, CATEGORIES, SKILL_SIZE_CLS, SKILL_ICON_CLS, type SkillCat } from "@/lib/data/skills";
 
 export default function SkillsSection() {
@@ -20,7 +21,9 @@ export default function SkillsSection() {
 
       <div className="section-inner relative z-10">
         <m.div ref={ref} variants={stagger()} initial="hidden" animate={inView ? "visible" : "hidden"}>
-          <m.p variants={fadeUp} className="section-label mb-3">Capabilities</m.p>
+          <m.div variants={fadeUp} className="mb-3">
+            <RuleEyebrow n={2} target="/skills" label="Capabilities" />
+          </m.div>
           <m.h2 variants={fadeUp} className="section-title mb-2">
             My <span className="text-cyber-gradient">Arsenal</span>
           </m.h2>
@@ -65,9 +68,10 @@ export default function SkillsSection() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2 }}
-              className="flex flex-wrap gap-2" role="list" aria-label="Skills list">
+              className="flex flex-wrap justify-center gap-x-3 gap-y-3 sm:gap-x-4" role="list" aria-label="Skills list">
               {filtered.map(({ name, icon: Icon, color, size }) => (
-                <div key={name} role="listitem" className={`skill-badge ${SKILL_SIZE_CLS[size]}`}>
+                <div key={name} role="listitem" className={`skill-badge ${SKILL_SIZE_CLS[size]}`}
+                  style={{ borderColor: `${color}22` }}>
                   <Icon className={`${SKILL_ICON_CLS[size]} flex-shrink-0`} style={{ color }} aria-hidden="true" />
                   {name}
                 </div>

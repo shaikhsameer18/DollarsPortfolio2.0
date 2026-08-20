@@ -6,6 +6,7 @@ import { Linkedin, Download, ChevronRight, GraduationCap, Shield } from "lucide-
 import { FaGithub } from "react-icons/fa";
 import { fadeUp, stagger } from "@/lib/animations";
 import { useReveal } from "@/lib/hooks/useReveal";
+import RuleEyebrow from "@/components/RuleEyebrow";
 import newProfilePic from "@/public/assets/sam.jpg";
 
 const QUICK_FACTS = [
@@ -36,7 +37,9 @@ export default function AboutSection() {
         >
           {/* Left: Text */}
           <div className="flex-1 min-w-0 order-2 lg:order-1">
-            <m.p variants={fadeUp} className="section-label mb-3">About Me</m.p>
+            <m.div variants={fadeUp} className="mb-3">
+              <RuleEyebrow n={1} target="/about" label="About Me" />
+            </m.div>
             <m.h2 variants={fadeUp} className="section-title mb-2">
               Security-First.<br />
               <span className="text-cyber-gradient">Always.</span>

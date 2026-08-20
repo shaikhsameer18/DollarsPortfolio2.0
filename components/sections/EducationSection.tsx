@@ -2,9 +2,10 @@
 
 import { m } from "framer-motion";
 import Image from "next/image";
-import { Terminal, Award } from "lucide-react";
+import { Terminal } from "lucide-react";
 import { fadeUp, stagger } from "@/lib/animations";
 import { useReveal } from "@/lib/hooks/useReveal";
+import RuleEyebrow from "@/components/RuleEyebrow";
 import mhsscoe from "@/public/assets/mhsscoe.png";
 import xaviers from "@/public/assets/xaviers.jpeg";
 
@@ -59,9 +60,9 @@ export default function EducationSection() {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
-          <m.p variants={fadeUp} className="section-label mb-3">
-            Education
-          </m.p>
+          <m.div variants={fadeUp} className="mb-3">
+            <RuleEyebrow n={5} target="/education" label="Education" />
+          </m.div>
           <m.h2 variants={fadeUp} className="section-title mb-2">
             Academic <span className="text-cyber-gradient">Foundation</span>
           </m.h2>
@@ -126,39 +127,6 @@ export default function EducationSection() {
               </m.div>
             ))}
           </div>
-
-          <m.div variants={fadeUp}>
-            <div
-              className="cyber-card p-5 sm:p-6 border-l-2"
-              style={{ borderLeftColor: "#00D4FF" }}
-              aria-label="Professional Certification"
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                <div
-                  className="w-12 h-12 rounded-xl border border-[#00D4FF]/30 bg-[#00D4FF]/08 flex items-center justify-center flex-shrink-0"
-                  aria-hidden="true"
-                >
-                  <Award className="w-5 h-5 text-[#00D4FF]" />
-                </div>
-                <div className="flex-1">
-                  <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <h3 className="font-pliant text-base font-bold text-[#C4DCF0]">
-                      Sophos Firewall Certified Engineer
-                    </h3>
-                    <span className="px-2 py-0.5 rounded text-[10px] font-mono-jet font-semibold text-[#00D4FF] border border-[#00D4FF]/30 bg-[#00D4FF]/08">
-                      CERTIFIED
-                    </span>
-                  </div>
-                  <p className="font-mono-jet text-xs text-[#6B8EAD]">
-                    Sophos — Official Certification
-                  </p>
-                  <p className="font-inter-var text-sm text-[#6B8EAD] mt-1">
-                    Certified in Sophos XGS Firewall deployment, policy architecture, IPsec VPN, WAF rules, and advanced threat protection on Sophos Central.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </m.div>
         </m.div>
       </div>
     </section>

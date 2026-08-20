@@ -14,12 +14,11 @@ export interface Project {
   title:         string;
   desc:          string;
   image:         StaticImageData;
-  github:        string;
+  github?:       string;
   demo:          string;
   tags:          string[];
   featured:      boolean;
   security:      boolean;
-  securityAngle?: string;
 }
 
 export type Difficulty = "Easy" | "Medium" | "Hard";
@@ -39,23 +38,20 @@ export const PROJECTS: Project[] = [
     title:    "DDoS Shield",
     desc:     "Cybersecurity education platform explaining DDoS attack vectors (volumetric, protocol, application-layer), mitigation strategies, and protection tier configurations.",
     image:    ddosshield,
-    github:   "https://github.com/shaikhsameer18/DDoS-Shield",
     demo:     "https://ddos-shield.vercel.app/",
     tags:     ["Next.js", "Framer Motion", "TypeScript"],
     featured: true,
     security: true,
-    securityAngle: "Already security-focused. Enhance: add live traffic simulator, Cloudflare/AWS Shield API integration demo, and a CVE lookup widget.",
   },
   {
     title:    "CodeCollab",
     desc:     "Real-time collaborative coding platform with JWT auth, encrypted WebSocket channels, CSP headers, and XSS-safe input handling. Integrates OpenAI and GitHub APIs.",
     image:    codecollab,
-    github:   "https://github.com/shaikhsameer18/CodeCollabFinal",
+    github:   "https://github.com/shaikhsameer18/CodeCollab",
     demo:     "https://codecollabfinal.vercel.app/",
     tags:     ["React", "Node.js", "Socket.io", "MongoDB", "OpenAI"],
     featured: true,
     security: false,
-    securityAngle: "Add: JWT refresh-token rotation, rate limiting on code execution, sandboxed code runner (Docker isolate), and audit logs for session events.",
   },
   {
     title:    "LotteryVault",
@@ -66,40 +62,33 @@ export const PROJECTS: Project[] = [
     tags:     ["Solidity", "MetaMask", "React", "Smart Contracts"],
     featured: true,
     security: true,
-    securityAngle: "Add: MythX / Slither static analysis report, on-chain event audit trail, formal verification, and bug-bounty documentation in the README.",
   },
   {
     title:    "GeekyTechh",
     desc:     "Freelance services website with secure contact form, performance-optimised image pipeline, strict CSP headers, and HSTS enforcement.",
     image:    geeky3,
-    github:   "https://github.com/shaikhsameer18/GeekyTechh3.0",
     demo:     "https://www.geekytechh.in/",
     tags:     ["Next.js", "Tailwind CSS", "Framer Motion"],
     featured: true,
     security: false,
-    securityAngle: "Add: Vercel WAF rules, rate-limited contact API (already partial), and a publicly visible security.txt file at /.well-known/security.txt.",
   },
   {
     title:    "Alvira Bags",
     desc:     "E-commerce platform with CMS-driven content, secure checkout flow, and server-side data fetching to avoid client-side credential exposure.",
     image:    alvira,
-    github:   "https://github.com/shaikhsameer18/alvirabag",
     demo:     "https://alvirabag.vercel.app/",
     tags:     ["Next.js", "Sanity.io", "TypeScript"],
     featured: false,
     security: false,
-    securityAngle: "Add: Sanity webhook signature verification, input sanitisation on search, and PCI-DSS note if payments are added.",
   },
   {
     title:    "Search Bag",
     desc:     "Manufacturer & wholesaler marketplace with server-validated search, rate-limited APIs, and HTTPS-enforced deployment.",
     image:    searchBag,
-    github:   "https://github.com/shaikhsameer18/SearchBag",
     demo:     "https://www.searchbag.in/",
     tags:     ["React", "Node.js", "MongoDB"],
     featured: false,
     security: false,
-    securityAngle: "Add: MongoDB injection guards (parameterized queries), OWASP ZAP automated scan in CI, and security.txt.",
   },
   {
     title:    "Imposter Game",
@@ -110,7 +99,6 @@ export const PROJECTS: Project[] = [
     tags:     ["React", "Node.js", "TypeScript", "Socket.io"],
     featured: false,
     security: false,
-    securityAngle: "Add: server-side authoritative game state (prevent client tampering), socket room auth tokens, and anti-cheat event validation.",
   },
   {
     title:    "Grocery Management",
@@ -121,7 +109,6 @@ export const PROJECTS: Project[] = [
     tags:     ["Next.js", "TypeScript", "Tailwind CSS"],
     featured: false,
     security: false,
-    securityAngle: "Add: CSRF tokens on checkout, rate limiting on add-to-cart API, and server-side price validation.",
   },
   {
     title:    "DA Tech",
@@ -132,18 +119,15 @@ export const PROJECTS: Project[] = [
     tags:     ["React", "TypeScript", "Tailwind CSS"],
     featured: false,
     security: false,
-    securityAngle: "Add: Zod-validated contact form, honeypot spam protection, and CSP headers via Vercel config.",
   },
   {
     title:    "ScienceAI",
     desc:     "AI-powered defect analyser using computer vision to detect and classify museum exhibit defects.",
     image:    scienceai,
-    github:   "https://github.com/shaikhsameer18/ScienceAI",
     demo:     "https://science-ai.vercel.app/",
     tags:     ["Next.js", "TensorFlow.js", "TypeScript"],
     featured: false,
     security: false,
-    securityAngle: "Add: image upload validation (type + size + magic bytes check), adversarial input detection, and model output sanitisation.",
   },
 ];
 

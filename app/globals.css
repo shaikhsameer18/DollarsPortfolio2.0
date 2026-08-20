@@ -92,6 +92,40 @@
     opacity: 0.5;
   }
 
+  .rule-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    @apply inline-flex flex-wrap items-baseline gap-x-2 gap-y-1 text-[11px] sm:text-xs;
+  }
+
+  .rule-eyebrow-id {
+    color: var(--cyan);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+  }
+
+  .rule-eyebrow-sep {
+    color: var(--text-muted);
+  }
+
+  .rule-eyebrow-syntax {
+    color: var(--text-dim);
+    letter-spacing: 0.01em;
+  }
+
+  .rule-eyebrow-verdict {
+    color: var(--green);
+    font-weight: 600;
+  }
+
+  .rule-eyebrow-label {
+    color: var(--text-muted);
+  }
+
+  .rule-eyebrow-label::before {
+    content: "// ";
+    opacity: 0.6;
+  }
+
   .section-title {
     font-family: 'Pliant', system-ui, sans-serif;
     @apply text-4xl sm:text-5xl font-bold;

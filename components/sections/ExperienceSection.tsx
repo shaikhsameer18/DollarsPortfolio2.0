@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Terminal, MapPin, ChevronRight, ExternalLink } from "lucide-react";
 import { fadeUp, stagger } from "@/lib/animations";
 import { useReveal } from "@/lib/hooks/useReveal";
+import RuleEyebrow from "@/components/RuleEyebrow";
 import zoffecLogo from "@/public/assets/zoffec.png";
 import geekyLogo from "@/public/assets/geeky.png";
 
@@ -90,9 +91,9 @@ export default function ExperienceSection() {
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
         >
-          <m.p variants={fadeUp} className="section-label mb-3">
-            Career
-          </m.p>
+          <m.div variants={fadeUp} className="mb-3">
+            <RuleEyebrow n={3} target="/experience" label="Career" />
+          </m.div>
           <m.h2 variants={fadeUp} className="section-title mb-2">
             Work <span className="text-cyber-gradient">Experience</span>
           </m.h2>
